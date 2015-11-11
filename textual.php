@@ -160,6 +160,14 @@ not($title/text()=$f/text())</code>, and
     <td>
     <select name = 'database' id = 'database' onclick ="databaseListing()" onchange="loadDatabase()">
       <option selected value='none'>select a schema
+      <option>schema_q1</option>
+      <option>schema_q2</option>
+      <option>schema_q3</option>
+      <option>schema_q6</option>
+      <option>schema_q7</option>
+      <option>schema_q8</option>
+      <option>schema_q9</option>
+      <option>schema_q10</option>
     </select>
     </td>
     </tr>
