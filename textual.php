@@ -6,14 +6,14 @@
 	<meta name="author" content="jalmen Jesús Manuel Almendros-Jiménez abecerra Antonio Becerra-Terón">
 	<meta name="keywords" content="TEXTUAL, XQuery, testing, XML, test-case generation">
 	<title>TEXTUAL</title>
-	<link type="text/css" href="aux/jquery-ui-1.8.18.custom.css" rel="stylesheet" />	
+	<link type="text/css" href="auxJavaScript/jquery-ui-1.8.18.custom.css" rel="stylesheet" />	
 <link rel="stylesheet" href="CodeMirror/lib/codemirror.css">
 <script src="CodeMirror/lib/codemirror.js"></script>
 <script src="CodeMirror/mode/xml/xml.js"></script>
 <script src="CodeMirror/mode/xquery/xquery.js"></script>
 <script src="CodeMirror/addon/selection/active-line.js"></script>
-	<script type="text/javascript" src="aux/jquery-1.7.2.min.js"></script>
-	<script type="text/javascript" src="aux/jquery-ui-1.8.18.custom.min.js"></script>
+	<script type="text/javascript" src="auxJavaScript/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="auxJavaScript/jquery-ui-1.8.18.custom.min.js"></script>
     <script type="text/javascript">
 			$(function(){
 	
