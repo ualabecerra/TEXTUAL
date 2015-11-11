@@ -180,8 +180,22 @@ not($title/text()=$f/text())</code>, and
     </td>
     </tr>
     </table>
+    <table>
+    <tr>
+    <td>
+    <br><br><br><button onclick="dtdValidator()">DTD Validator</button>
+    </td>
+    </tr>	
+    <tr>
+    <td>
+    <textarea cols="30" rows=5 id="DTDSchema"></textarea>
+    </td>
+    </tr>
+    </table>
 </td>
 </tr>
+<td>
+<table>
 <tr>
 <td><b>XQuery Program</b></td>
 </tr>
@@ -190,6 +204,22 @@ not($title/text()=$f/text())</code>, and
 <textarea id="program"></textarea>
 </td>
 </tr>
+</table>
+</td>
+<td>
+	    <table>
+    <tr>
+    <td>
+    <br><br><br><button onclick="schemaValidator()">Program Validator</button>
+    </td>
+    </tr>	
+    <tr>
+    <td>
+    <textarea cols="25" rows=2 id="XMLSchemaValidator"></textarea>
+    </td>
+    </tr>
+    </table>
+</td>
 <tr>
 <td><b>Input Property</b></td>
 </tr>
@@ -280,9 +310,30 @@ var editor5 = CodeMirror.fromTextArea(document.getElementById("inputoutput"), {
   styleActiveLine: true,
   lineNumbers: true,
   lineWrapping: true
+  
 });
  
  editor5.setSize(600,150);
+ 
+ var editor6 = CodeMirror.fromTextArea(document.getElementById("DTDSchema"), {
+  mode: "application/xquery",
+  styleActiveLine: true,
+  lineNumbers: false,
+  lineWrapping: true
+  
+});
+
+ editor6.setSize(220,100);
+ 
+ var editor7 = CodeMirror.fromTextArea(document.getElementById("XMLSchemaValidator"), {
+  mode: "application/xquery",
+  styleActiveLine: true,
+  lineNumbers: false,
+  lineWrapping: true
+  
+});
+
+ editor7.setSize(220,100);
  
  var cadena = "declare function tc:q9($file)\n{\n<results>\n{\n for $t in $file//(chapter|section)/title \n where contains($t/text(), 'XML')\n} \n<\/results>\n};";
 
@@ -298,6 +349,8 @@ function removeAll() {
 	editor3.getDoc().setValue("");
 	editor4.getDoc().setValue("");
 	editor5.getDoc().setValue("");
+	editor6.getDoc().setValue("");
+	editor7.getDoc().setValue("");
 	$('#depth').val("");
 	$('#result').val("");
 }
@@ -371,7 +424,7 @@ function loadCode() {
    
    var url; 
    
-   if ($('#examples').val()=='ex08') {
+   if ($('#examples').val() =='ex08') {
    	    cadena = "declare function tc:q($file)\n{\n for $b in $file//book \n let $e := $b/*[contains(string(.), 'Suciu') and ends-with(local-name(.), 'or')] where exists($e)\n return\n <book>\n { $b/title } \n { $e }\n </book>\n };";
    	    editor2.getDoc().setValue(cadena);
         cadena = "declare function tc:i($file)\n{\n  true() \n};"; 
@@ -383,7 +436,7 @@ function loadCode() {
         $('#depth').val(1);        
       }
       else 
-         if ($('#examples').val()=='ex09') {
+         if ($('#examples').val() =='ex09') {
    	  	    cadena = "declare function tc:q($file)\n{\n<results>\n{\n for $t in $file//(chapter|section)/title \n where contains($t/text(), 'XML')\n return $t \n}\n<\/results>\n};";
             editor2.getDoc().setValue(cadena);
             cadena = "declare function tc:i($file)\n{\n true()\n};"; 
@@ -420,8 +473,11 @@ function runningTesting(){
     // Cambiar para que sea síncrono
       
      createDatabase(url); 
+ 
 
-      // Run Test Cases
+     // Run Test Cases
+
+
 
       var url = 'http://textualtesting.cloudapp.net:8984/rest?run=runningXQueryEval.xq&program=' + encodeURIComponent(program) + '&input=' + 
                 encodeURIComponent(input) + '&output=' + encodeURIComponent(output) + '&inputoutput=' + encodeURIComponent(inputoutput) +
@@ -456,6 +512,34 @@ function runningTesting(){
   
 </script>
 
+<script>
+	
+function dtdValidator(){
+	
+    var text = editor1.getValue();  
+    
+    if (text != "")
+    {
+      
+      var url = 'http://textualtesting.cloudapp.net:8984/rest?run=dtdValidation.xq&textArea=' + encodeURIComponent(text); 
+
+      $.ajax({
+      url: 'elementsFromAPI.php',
+          type: 'GET',
+          data: {url:url},
+          dataType: 'text',
+          success: actualizar
+      }) 
+      function actualizar(datos){ 
+  		editor6.getDoc().setValue(datos);
+      }
+   }
+   else {
+   	alert('XML Schema is blank');
+   }
+}	
+	
+</script>
 
 </body>
 </html>
