@@ -324,7 +324,7 @@ var editor5 = CodeMirror.fromTextArea(document.getElementById("inputoutput"), {
  editor5.setSize(600,150);
  
  var editor6 = CodeMirror.fromTextArea(document.getElementById("DTDSchema"), {
-  mode: "application/xquery",
+  mode: "application/xmly",
   styleActiveLine: true,
   lineNumbers: false,
   lineWrapping: true
@@ -334,7 +334,7 @@ var editor5 = CodeMirror.fromTextArea(document.getElementById("inputoutput"), {
  editor6.setSize(220,100);
  
  var editor7 = CodeMirror.fromTextArea(document.getElementById("XMLSchemaValidator"), {
-  mode: "application/xquery",
+  mode: "application/xml",
   styleActiveLine: true,
   lineNumbers: false,
   lineWrapping: true
@@ -343,9 +343,14 @@ var editor5 = CodeMirror.fromTextArea(document.getElementById("inputoutput"), {
 
  editor7.setSize(220,100);
  
- var cadena = "declare function tc:q9($file)\n{\n<results>\n{\n for $t in $file//(chapter|section)/title \n where contains($t/text(), 'XML')\n} \n<\/results>\n};";
+  var editor8 = CodeMirror.fromTextArea(document.getElementById("result"), {
+  mode: "application/xml",
+  styleActiveLine: true,
+  lineNumbers: false,
+  lineWrapping: true  
+});
 
- editor5.getDoc().setValue(cadena);
+editor8.setSize(600,150);
  
 </script>
 
@@ -360,7 +365,7 @@ function removeAll() {
 	editor6.getDoc().setValue("");
 	editor7.getDoc().setValue("");
 	$('#depth').val("");
-	$('#result').val("");
+	editor8.getDoc().setValue("");
 }
 
  function databaseListing(){
@@ -482,10 +487,7 @@ function runningTesting(){
       
      createDatabase(url); 
  
-
      // Run Test Cases
-
-
 
       var url = 'http://textualtesting.cloudapp.net:8984/rest?run=runningXQueryEval.xq&program=' + encodeURIComponent(program) + '&input=' + 
                 encodeURIComponent(input) + '&output=' + encodeURIComponent(output) + '&inputoutput=' + encodeURIComponent(inputoutput) +
@@ -514,7 +516,7 @@ function runningTesting(){
     }
     )
       function actualizar(datos){
-  		$('#result').val(datos);
+  		editor8.getDoc().setValue(datos);;
     }
   }
   
