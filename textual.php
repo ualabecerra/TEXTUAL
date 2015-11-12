@@ -473,8 +473,23 @@ function runningTesting(){
 	var output = editor4.getValue();
 	var inputoutput = editor5.getValue();
 	var depth = $('#depth').val();
-	
- 
+	    
+    if (text == ""){
+    	alert('XML Schema is blank');
+    } else if (program == ""){
+         	alert('Program is blank');
+         } else if (input == ""){
+         		   alert('Input Property is blank');
+         		} else if (output == ""){
+         				alert('Output Property  is blank');
+         			} else if (inputoutput == ""){
+         			 		alert('Input Output Property is blank');
+         			 	} else if (depth == ""){
+         			 			alert('Depth is blank');
+         			 		} 
+     else {
+         			 		
+         		
     // Drop database
 
     var url = 'http://textualtesting.cloudapp.net:8984/rest?run=droppingDatabase.xq'; 
@@ -493,7 +508,8 @@ function runningTesting(){
                 encodeURIComponent(input) + '&output=' + encodeURIComponent(output) + '&inputoutput=' + encodeURIComponent(inputoutput) +
                 '&depth=' + encodeURIComponent(depth); 
 
-      runTest(url);       
+      runTest(url);
+     }
 }
 
   function createDatabase(url) {
