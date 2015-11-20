@@ -89,8 +89,8 @@
 		<!-- Tabs -->
 		<div id="tabs">
 			<ul>
-				<li><a href="#tabs-1">home</a></li>
-				<li><a href="#tabs-2">web interface</a></li>
+				<li><a href="#tabs-1">Home</a></li>
+				<li><a href="#tabs-2">Web Interface</a></li>
 			</ul>
 			<div id="tabs-1">
 			
@@ -107,8 +107,8 @@
                                    <li>Jesús Manuel Almendros-Jiménez, Antonio Becerra Terón. <br/>
                                 	<span class="title">
                                 	Automatic Validation of XQuery Programs</span>. <br>
-                                	<em>Proceedings of iiWAS 2015, pp. 268-282</em>
-                                    <a href="./Papers/iiWas2015.pdf">PDF</a>
+                                	<em>Proceedings of iiWAS 2015</em>
+                                    <a href="./Papers/iiWAS2015.pdf">PDF</a>
                                 </li>
 
                         </ul>
@@ -159,7 +159,7 @@ not($title/text()=$f/text())</code>, and
 <td valign="top">	
     <table>
     <tr>
-	<td><b>Choose a XML Schema</b>
+	<td><b>Choose an XML Schema</b>
     </td>
     </tr>
     <tr>
@@ -197,7 +197,7 @@ not($title/text()=$f/text())</code>, and
     <table>
     <tr>
     <td>
-    <br><br><br><button onclick="dtdValidator()">DTD Validator</button>
+    <br><br><br><button onclick="dtdValidator()">DTD XML Schema Validation</button>
     </td>
     </tr>	
     <tr>
@@ -221,61 +221,131 @@ not($title/text()=$f/text())</code>, and
 </table>
 </td>
 <td>
-	    <table>
+ <table>
     <tr>
     <td>
-    <br><br><br><button onclick="schemaValidator()">Program Validator</button>
+    <br><br><br><button onclick="schemaProgramValidator()">XML Schema Program Validation</button>
     </td>
     </tr>	
     <tr>
     <td>
-    <textarea cols="25" rows=2 id="XMLSchemaValidator"></textarea>
+    <textarea cols="25" rows=2 id="XMLSchemaPorgramValidator"></textarea>
     </td>
     </tr>
     </table>
 </td>
 <tr>
+<td>
+<table>
+	<tr><td><b>Generated test cases</b></td></tr>
+	<tr><td><textarea cols="90" rows="10" id="result"></textarea></td></tr>
+</table>
+</td>
+<td valign="top"> <table>
+	 <tr><td align="center"><b>Steps</b></td><td><input type="text" id="depth" size=6></td>
+	 	<td><button onclick="runningTesting()"><b>TEST</b></button></td></tr>
+	   </table> 
+	</td>
+</tr>
+<script>
+	$(document).ready(function () {
+  //called when key is pressed in textbox
+  $("#depth").keypress(function (e) {
+     //if the letter is not digit then display error and don't type anything
+     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+         return false;
+    }
+   });
+});
+</script>
+</td>
+<tr>
+<td>
+	<table>
+<tr>
 <td><b>Input Property</b></td>
 </tr>
 <tr>
 <td>
-<textarea cols="90" rows=4 id="input"></textarea>
+<textarea id="input"></textarea>
 </td>
 </tr>
+</table>
+</td>
+<td>
+	    <table>
+    <tr>
+    <td>
+    <br><br><br><button onclick="schemaInputValidator()">XML Schema Input Validation</button>
+    </td>
+    </tr>	
+    <tr>
+    <td>
+    <textarea cols="25" rows=2 id="XMLSchemaInputValidator"></textarea>
+    </td>
+    </tr>
+    </table>
+</td>
+</tr>
+<tr>
+<td>
+		<table>
 <tr>
 <td><b>Output Property</b></td>
 </tr>
 <tr>
 <td>
-<textarea cols="90" rows=4 id="output"></textarea>
+<textarea id="output"></textarea>
 </td>
 </tr>
+</table>
+</td>
+<td>
+	    <table>
+    <tr>
+    <td>
+    <br><br><br><button onclick="schemaOutputValidator()">XML Schema Output Validation</button>
+    </td>
+    </tr>	
+    <tr>
+    <td>
+    <textarea cols="25" rows=2 id="XMLSchemaOutputValidator"></textarea>
+    </td>
+    </tr>
+    </table>
+</td>
+</tr>
+<tr>
+<td>
+		<table>
 <tr>
 <td><b>Input-Output Property</b></td>
 </tr>
 <tr>
 <td>
-<textarea cols="90" rows=4 id="inputoutput"></textarea>
+<textarea id="inputoutput"></textarea>
 </td>
 </tr>
-<table>
-<tr>
-<td>Maximum term depth:</td>
-<td><input type="text" id="depth" size=6></td>
-</tr>
 </table>
-<button onclick="runningTesting()">TEST</button></td>
+</td>
+<td>
+	    <table>
+    <tr>
+    <td>
+    <br><br><br><button onclick="schemaInputOutputValidator()">XML Schema Input Output Validation</button>
+    </td>
+    </tr>	
+    <tr>
+    <td>
+    <textarea cols="25" rows=2 id="XMLSchemaInputOutputValidator"></textarea>
+    </td>
+    </tr>
+    </table>
+</td>
 </tr>
 </table>
 
-<p>
-<b>Generated test cases:</b><br>
-<textarea cols="90" rows="10" id="result"></textarea>
-<!--
-<div id="log" style="scroll:auto; width:1000px;">
-</div>
--->
-</p>
+
 			
 			</div> <!--  end tabs-2 -->
 
@@ -339,7 +409,7 @@ var editor5 = CodeMirror.fromTextArea(document.getElementById("inputoutput"), {
 
  editor6.setSize(220,100);
  
- var editor7 = CodeMirror.fromTextArea(document.getElementById("XMLSchemaValidator"), {
+ var editor7 = CodeMirror.fromTextArea(document.getElementById("XMLSchemaPorgramValidator"), {
   mode: "application/xml",
   styleActiveLine: true,
   lineNumbers: false,
@@ -352,11 +422,40 @@ var editor5 = CodeMirror.fromTextArea(document.getElementById("inputoutput"), {
   var editor8 = CodeMirror.fromTextArea(document.getElementById("result"), {
   mode: "application/xml",
   styleActiveLine: true,
-  lineNumbers: false,
+  lineNumbers: true,
   lineWrapping: true  
 });
 
 editor8.setSize(600,150);
+
+  var editor9 = CodeMirror.fromTextArea(document.getElementById("XMLSchemaInputValidator"), {
+  mode: "application/xml",
+  styleActiveLine: true,
+  lineNumbers: false,
+  lineWrapping: true  
+});
+
+editor9.setSize(220,100);
+
+  var editor10 = CodeMirror.fromTextArea(document.getElementById("XMLSchemaOutputValidator"), {
+  mode: "application/xml",
+  styleActiveLine: true,
+  lineNumbers: false,
+  lineWrapping: true  
+});
+
+editor10.setSize(220,100);
+
+
+  var editor11 = CodeMirror.fromTextArea(document.getElementById("XMLSchemaInputOutputValidator"), {
+  mode: "application/xml",
+  styleActiveLine: true,
+  lineNumbers: false,
+  lineWrapping: true  
+});
+
+editor11.setSize(220,100);
+
  
 </script>
 

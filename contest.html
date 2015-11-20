@@ -1,0 +1,436 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="author" content="jalmen Jesús Manuel Almendros-Jiménez abecerra Antonio Becerra-Terón">
+	<meta name="keywords" content="textual, XQuery, testing, XML, test-case generation">
+	<title>Textual</title>
+	<link type="text/css" href="aux/jquery-ui-1.8.18.custom.css" rel="stylesheet" />	
+	<script type="text/javascript" src="aux/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="aux/jquery-ui-1.8.18.custom.min.js"></script>
+		<script type="text/javascript">
+			var current_example
+			
+			// loading a program from the collection of examples
+			var oXml
+
+			var current_example
+
+			function loadPRG() {
+
+			  var lista = document.getElementById("examples")
+			  var url = lista.options[lista.selectedIndex].value
+
+			  current_example = url
+
+			  if (url=="none") return 0
+
+			  document.getElementById("query").value = ""
+			  document.getElementById("gpos").value = ""
+			  document.getElementById("depth").value = ""
+                          document.getElementById("timeout").value = ""
+			  document.getElementById("log").value = ""
+
+			  oXml = false;
+			  oXml = new XMLHttpRequest()
+			 
+			  if (oXml.overrideMimeType) {
+			      oXml.overrideMimeType('text/html');
+			  }
+			  oXml.onreadystatechange = respuesta
+
+			  try {
+			    oXml.open('GET',url,true)
+			  } catch(err) {
+			    alert('ERROR: open')
+			  }
+			  oXml.send(null)
+			}
+
+			function respuesta() {
+
+			  if (oXml.readyState == 4) {
+			    if (oXml.status == 200) {
+			      document.getElementById("iprog").value = oXml.responseText
+			      
+			      if (current_example=='contest/ex01.pl') {
+			         document.getElementById("query").value = "p(s(a))"
+			         document.getElementById("gpos").value = "[1]"
+			         document.getElementById("depth").value = "2"
+                                 document.getElementById("timeout").value = "10"
+			      } else if (current_example=='contest/ex02.pl') {
+			         document.getElementById("query").value = "p(s(a),a)"
+			         document.getElementById("gpos").value = "[1]"
+			         document.getElementById("depth").value = "2"
+                                 document.getElementById("timeout").value = "10"
+			      } else if (current_example=='contest/ex03.pl') {
+			         document.getElementById("query").value = "nat(0)"
+			         document.getElementById("gpos").value = "[1]"
+			         document.getElementById("depth").value = "3"
+                                 document.getElementById("timeout").value = "10"
+			      } else if (current_example=='contest/ex04.pl') {
+			         document.getElementById("query").value = "what_to_do_today(monday,sunny,A)"
+			         document.getElementById("gpos").value = "[1,2]"
+			         document.getElementById("depth").value = "2"
+                                 document.getElementById("timeout").value = "10"
+			      } else if (current_example=='contest/ex05.pl') {
+			         document.getElementById("query").value = "applast([],42,L)"
+			         document.getElementById("gpos").value = "[1,2]"
+			         document.getElementById("depth").value = "2"
+                                 document.getElementById("timeout").value = "10"
+			      } else if (current_example=='contest/ex06.pl') {
+			         document.getElementById("query").value = "depth(member(i,[a,b]),Depth)"
+			         document.getElementById("gpos").value = "[1]"
+			         document.getElementById("depth").value = "1"
+                                 document.getElementById("timeout").value = "10"
+			      } else if (current_example=='contest/ex07.pl') {
+			         document.getElementById("query").value = "generate(empty,A,B)"
+			         document.getElementById("gpos").value = "[1,2]"
+			         document.getElementById("depth").value = "1"
+                                 document.getElementById("timeout").value = "20"
+			      } else if (current_example=='contest/ex08.pl') {
+			         document.getElementById("query").value = "relative(a,b)"
+			         document.getElementById("gpos").value = "[1,2]"
+			         document.getElementById("depth").value = "1"
+                                 document.getElementById("timeout").value = "20"
+			      } else if (current_example=='contest/ex09.pl') {
+			         document.getElementById("query").value = "rp( tree(leaf(s(0)),s(s(0)),leaf(s(s(0)))), Res)"
+			         document.getElementById("gpos").value = "[1]"
+			         document.getElementById("depth").value = "2"
+                                 document.getElementById("timeout").value = "30"
+			      } else if (current_example=='contest/ex10.pl') {
+			         document.getElementById("query").value = "transpose([[1,2],[3,4]],X)"
+			         document.getElementById("gpos").value = "[1]"
+			         document.getElementById("depth").value = "2"
+                                 document.getElementById("timeout").value = "30"
+			      } else if (current_example=='contest/ex11.pl') {
+                                 document.getElementById("query").value = "mult(0,0,0)"
+                                 document.getElementById("gpos").value = "[1,2]"
+                                 document.getElementById("depth").value = "2"
+                                 document.getElementById("timeout").value = "10"
+                              } else if (current_example=='contest/ex12.pl') {
+                                 document.getElementById("query").value = "hanoi(0)"
+                                 document.getElementById("gpos").value = "[1]"
+                                 document.getElementById("depth").value = "2"
+                                 document.getElementById("timeout").value = "20"
+                              } else if (current_example=='contest/ex13.pl') {
+                                 document.getElementById("query").value = "accept([a])"
+                                 document.getElementById("gpos").value = "[1]"
+                                 document.getElementById("depth").value = "2"
+                                 document.getElementById("timeout").value = "30"
+                              } else if (current_example=='contest/ex14.pl') {
+                                 document.getElementById("query").value = "qsort([],A,B)"
+                                 document.getElementById("gpos").value = "[1]"
+                                 document.getElementById("depth").value = "3"
+                                 document.getElementById("timeout").value = "200"
+                              } else if (current_example=='contest/ex15.pl') {
+                                 document.getElementById("query").value = "incList([],0,B)"
+                                 document.getElementById("gpos").value = "[1,2]"
+                                 document.getElementById("depth").value = "1"
+                                 document.getElementById("timeout").value = "10"
+                              } else if (current_example=='contest/ex16.pl') {
+                                 document.getElementById("query").value = "flipflip(leaf(0),T)"
+                                 document.getElementById("gpos").value = "[1]"
+                                 document.getElementById("depth").value = "2"
+                                 document.getElementById("timeout").value = "10"
+                              } else if (current_example=='contest/ex17.pl') {
+                                 document.getElementById("query").value = "rev([],L)"
+                                 document.getElementById("gpos").value = "[1]"
+                                 document.getElementById("depth").value = "3"
+                                 document.getElementById("timeout").value = "10"
+                              } else if (current_example=='contest/ex18.pl') {
+                                 document.getElementById("query").value = "ackermann(0,0,A)"
+                                 document.getElementById("gpos").value = "[1,2]"
+                                 document.getElementById("depth").value = "2"
+                                 document.getElementById("timeout").value = "10"
+                              } else if (current_example=='contest/ex19.pl') {
+                                 document.getElementById("query").value = "fib(0,X)"
+                                 document.getElementById("gpos").value = "[1]"
+                                 document.getElementById("depth").value = "2"
+                                 document.getElementById("timeout").value = "10"
+                              } else if (current_example=='contest/ex20.pl') {
+                                 document.getElementById("query").value = "pre_order(tree(a,void,void),L)"
+                                 document.getElementById("gpos").value = "[1]"
+                                 document.getElementById("depth").value = "1"
+                                 document.getElementById("timeout").value = "10"
+                              }
+			    } else {
+			      alert("ERROR: page does not exist")
+			    }
+			  }
+			}
+
+
+			// filtering the loaded TRS
+			var oAns
+
+			function pepe() {
+			  oAns= new XMLHttpRequest()
+
+			  if (oAns.overrideMimeType) {
+			      oAns.overrideMimeType('text/html');
+			  }
+			  oAns.onreadystatechange = answer
+
+			  //input data
+			  var oPrg = document.getElementById("iprog").value
+			  var oQuery = document.getElementById("query").value
+			  var oGpos = document.getElementById("gpos").value
+			  var oDepth= document.getElementById("depth").value
+                          var oTimeout=document.getElementById("timeout").value
+                          var oTraces=document.getElementById("traces").checked
+
+			  var url = "http://kaz.dsic.upv.es/cgi-bin/contest.php"
+			  var dato = "prg=" + encodeURIComponent(oPrg) + "&query=" + encodeURIComponent(oQuery) + "&gpos=" + encodeURIComponent(oGpos) + "&depth=" + encodeURIComponent(oDepth) + "&timeout=" + encodeURIComponent(oTimeout) + "&traces=" + encodeURIComponent(oTraces)
+
+
+			  try {
+			    oAns.open('POST',url,true)
+			  } catch(err) {
+			    alert('ERROR: open')
+			  }
+
+			  oAns.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			  oAns.setRequestHeader("Content-length", dato.length);
+			  oAns.setRequestHeader("Connection", "close");
+
+			  oAns.send(dato)
+			}
+
+			function answer() {
+
+			  if (oAns.readyState == 4) {
+			    if (oAns.status == 200) {
+			      document.getElementById("log").value = oAns.responseText
+			    } else {
+			      alert("ERROR: page does not exist")
+			    }
+			  }
+			}
+
+			function sistemare() {
+
+			  document.getElementById("iprog").value = ""
+			  document.getElementById("query").value = ""
+			  document.getElementById("gpos").value = ""
+			  document.getElementById("depth").value = ""
+                          document.getElementById("timeout").value = ""
+			  document.getElementById("log").value = ""
+			  document.getElementById("examples").selectedIndex = 0
+
+			}
+
+
+			$(function(){
+	
+				// Tabs
+				$('#tabs').tabs();
+				
+				//hover states on the static widgets
+				/* $('#dialog_link, ul#icons li').hover(
+					function() { $(this).addClass('ui-state-hover'); }, 
+					function() { $(this).removeClass('ui-state-hover'); }
+				); */
+				
+				$('#foto').css("height",$('#header').css("height"))
+				
+
+			});
+		</script>
+		<style type="text/css">
+			/*demo page css*/
+			a{ text-decoration: none; color:#0066CC; }
+			body{ background: #f6f6f6; font-size: 100%; font-family: "Trebuchet MS", "Lucida sans", Arial; margin: 30px; width: 900px; }
+			/* h1{ border-bottom: solid black 1px; font-weight: 400; } */
+			h1{ font-weight: 600; font-size: xx-large; margin-bottom: -10px;}
+			code {font-weight:600; font-size:large;}
+			h3{ background: #f6f6f6; font-weight: 400; margin-top: 2em;}
+			h4{ font-weight:400; text-decoration: underline;}
+			#foto{ float: left; height: 6em; margin-top:.5em; }
+			#fotog{ height: 87%; }
+			#foto-right{ padding-left: 2em; }
+			#affiliation{ height: 237px; padding-left: 235px; padding-top: 100px; }
+			#cuerpo{ clear: both; margin-top: 3%; }
+			.title{ color: #990000; }
+			.titulo1{ display: block; font-size: 220%; color: brown; margin-bottom: .5em; }
+			.titulo2{ display: block; font-size: 120%; margin-bottom: .25em; }
+			.titulo3 { margin-top: 1em; display: block; font-size: 120%; font-style: italic; }
+			.titulo4{ font-size: 100%; text-decoration: underline; }
+			.flotante1{ float: left; width: 320px; margin: 10px; }
+			.flotante2{ float: left; width: 350px; margin: 10px; }
+			.noitems{ list-style-type: none; }
+		</style>	
+		<style type="text/css">
+		#flickr_badge_source_txt {padding:0; font: 11px Arial, Helvetica, Sans serif; color:#666666;}
+		#flickr_badge_icon {display:block !important; margin:0 !important; border: 1px solid rgb(0, 0, 0) !important;}
+		#flickr_icon_td {padding:0 5px 0 0 !important;}
+		.flickr_badge_image {text-align:center !important;}
+		.flickr_badge_image img {border: 1px solid black !important;}
+		#flickr_www {display:block; padding:0 10px 0 10px !important; font: 11px Arial, Helvetica, Sans serif !important; color:#3993ff !important;}
+		#flickr_badge_uber_wrapper a:hover,
+		#flickr_badge_uber_wrapper a:link,
+		#flickr_badge_uber_wrapper a:active,
+		#flickr_badge_uber_wrapper a:visited {text-decoration:none !important; background:inherit !important;color:#3993ff;}
+		#flickr_badge_wrapper {}
+		#flickr_badge_source {padding:0 !important; font: 11px Arial, Helvetica, Sans serif !important; color:#666666 !important;}
+		</style>
+</head>
+<body>
+		<div class="ui-widget">
+			<div id="header" class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;"> 
+				<div id="foto-right">
+				<h1>Textual: XML-based Testing</h1>
+				<ul class="noitems">	
+					<li><span style="font-size:x-large">Concolic testing in pure Prolog<br>
+						by <a href="http://lim.univ-reunion.fr/staff/fred/">Fred Mesnard</a>, 
+							<a href="http://lim.univ-reunion.fr/staff/epayet/">Étienne Payet</a>, 
+							and <a href="http://www.dsic.upv.es/~gvidal" target="_blank">Germán Vidal</a></span></li>
+				</ul>
+				</div>
+			</div>
+		</div>
+		
+		
+<div id="cuerpo">
+
+		<!-- Tabs -->
+		<div id="tabs">
+			<ul>
+				<li><a href="#tabs-1">home</a></li>
+				<li><a href="#tabs-2">web interface</a></li>
+			</ul>
+			<div id="tabs-1">
+			
+			<p>
+			<code>contest</code> is an automatic test case
+generator for logic programs. The tool is based on concolic execution (a combination of concrete and symbolic execution) 
+following the ideas introduced in the following paper:
+                        <ul class="noitems">
+                                <li>Fred Mesnard, Étienne Payet, Germ&aacute;n Vidal. <span class="title">Concolic Testing in Logic Programming</span>. <br>
+                                	<em>To appear in Theory and Practice of Logic Programming (TPLP), Proc. of ICLP 2015.</em>
+                                        <a href="http://www.dsic.upv.es/~gvidal/german/iclp15/paper_CORR.pdf">PDF</a>
+                                </li>
+                        </ul>
+			</p>
+
+			<p>It takes the following inputs:
+			<ul>
+				<li>a logic program (you can choose one of the
+				list, edit it or write down a new one), 
+				e.g., <code>ex01.pl</code>,</li>
+				<li>an initial (arbitrary) goal, e.g., <code>p(s(a))</code>, </li>
+				<li>a list of integers denoting the input arguments, e.g., <code>[1]</code>,</li>
+                                <li>a maximum term depth for the generated test cases, e.g., <code>2</code>, and</li>
+                                <li>a timeout (in seconds), e.g., <code>30</code>.</li>
+			</ul>
+			You can check the box in order to show
+			not only the test cases, but also the
+			associated traces.
+			</p>
+
+                        <p>You can also watch a presentation of the paper <a href="https://youtu.be/J9Gm2IEL_Nc">here</a>.</p>
+			
+			<p>Check the web interface in the next tab.</p>
+			
+			<p>Please let me know if you have any question or comment to 
+				<code>gvidal@dsic.upv.es</code>.</p>
+				
+			</div><!-- end tabs-1 -->
+			
+			<div id="tabs-2">
+			
+<table>
+<tr>
+<td><b>Source program</b></td>
+</tr>
+<tr>
+<td>
+<textarea cols="90" rows=18 id="iprog"></textarea>
+</td>
+</tr>
+<tr>
+<td>
+Choose a file:
+<select name="examples" id="examples" onchange="loadPRG()">
+<option selected value='none'>select a file
+<option value='contest/ex01.pl'>ex01.pl
+<option value='contest/ex02.pl'>ex02.pl
+<option value='contest/ex03.pl'>ex03.pl
+<option value='contest/ex04.pl'>ex04.pl
+<option value='contest/ex05.pl'>ex05.pl
+<option value='contest/ex06.pl'>ex06.pl
+<option value='contest/ex07.pl'>ex07.pl
+<option value='contest/ex08.pl'>ex08.pl
+<option value='contest/ex09.pl'>ex09.pl
+<option value='contest/ex10.pl'>ex10.pl
+<option value='contest/ex11.pl'>ex11.pl
+<option value='contest/ex12.pl'>ex12.pl
+<option value='contest/ex13.pl'>ex13.pl
+<option value='contest/ex14.pl'>ex14.pl
+<option value='contest/ex15.pl'>ex15.pl
+<option value='contest/ex16.pl'>ex16.pl
+<option value='contest/ex17.pl'>ex17.pl
+<option value='contest/ex18.pl'>ex18.pl
+<option value='contest/ex19.pl'>ex19.pl
+<option value='contest/ex20.pl'>ex20.pl
+</select>
+<!-- <button onclick="loadTRS()">load</button> -->
+<button onclick="sistemare()">clear</button>
+<br>
+<table>
+<tr>
+<td>Initial (atomic) goal:</td>
+<td><input type="text" id="query" size=64></td>
+</tr>
+<tr>
+<td>Input arguments:</td>
+<td><input type="text" id="gpos" size=24></td>
+</tr>
+<tr>
+<td>Maximum term depth:</td>
+<td><input type="text" id="depth" size=6></td>
+</tr>
+<tr>
+<td>Timeout (in seconds):</td>
+<td><input type="text" id="timeout" size=6>
+&nbsp;&nbsp;&nbsp; Show traces? 
+<input type="checkbox" id="traces"></td>
+</tr>
+</table>
+<button onclick="pepe()">START</button></td>
+</tr>
+</table>
+
+<p>
+<b>Generated test cases:</b><br>
+<textarea cols="90" rows=18 id="log"></textarea>
+<!--
+<div id="log" style="scroll:auto; width:1000px;">
+</div>
+-->
+</p>
+			
+			</div> <!--  end tabs-2 -->
+
+		</div> <!-- end div tabs -->
+</div> <!--  end div cuerpo -->
+
+
+
+<a style="display:hidden" href="http://www.eldescendimiento.org/Paginas/Junta/Hermanos.html"></a>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript">
+var sc_project=4229447;
+var sc_invisible=1;
+var sc_partition=49;
+var sc_click_stat=1;
+var sc_security="e88172b3";
+</script>
+
+<script type="text/javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><div class="statcounter"><a title="website statistics" href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img class="statcounter" src="http://c.statcounter.com/4229447/0/e88172b3/1/" alt="website statistics" ></a></div></noscript>
+<!-- End of StatCounter Code -->
+
+</body>
+</html>
