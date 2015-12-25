@@ -146,7 +146,7 @@ not($title/text()=$f/text())</code>, and
 <td valign="top">
     <table>
     <tr>
-    <td><b>XML Schema</b>
+    <td><b>Input XML Schema</b>
     </td>
     </tr>
     <tr>
@@ -159,34 +159,25 @@ not($title/text()=$f/text())</code>, and
 <td valign="top">	
     <table>
     <tr>
-	<td><b>Choose an XML Schema</b>
-    </td>
-    </tr>
-    <tr>
-    <td>
-    <select name = 'database' id = 'database' onclick ="databaseListing()" onchange="loadDatabase()">
-      <option selected value='none'>select a schema
-      <option>schema_q1</option>
-      <option>schema_q2</option>
-      <option>schema_q3</option>
-      <option>schema_q6</option>
-      <option>schema_q7</option>
-      <option>schema_q8</option>
-      <option>schema_q9</option>
-      <option>schema_q10</option>
-    </select>
-    </td>
-    </tr>
-    <tr>
 	<td><b>Choose an example</b>
     </td>
     </tr>
     <tr>
     <td>
     <select name="examples" id="examples" onchange="loadCode()">
-    <option selected value='none'>select an example
-    <option value='ex08'>example08
-    <option value='ex09'>example09
+    <option selected value=''>select an example
+    <option value='q1'>example01</option>
+    <option value='q2'>example02</option>
+    <option value='q3'>example03</option>
+    <option value='q4'>example04</option>
+    <option value='q5'>example05</option>
+    <option value='q6'>example06</option>
+    <option value='q7'>example07</option>
+    <option value='q8'>example08</option>
+    <option value='q9'>example09</option>
+    <option value='q10'>example10</option>
+    <option value='q11'>example11</option>
+    <option value='q12'>example12</option>
     </select>
     <!-- <button onclick="loadTRS()">load</button> -->
     <button onclick="removeAll()">clear</button>
@@ -197,7 +188,7 @@ not($title/text()=$f/text())</code>, and
     <table>
     <tr>
     <td>
-    <br><br><br><button onclick="dtdValidator()">DTD XML Schema Validation</button>
+    <br><br><br><button onclick="dtdValidator(editor1.getValue(),0)">DTD XML Schema Validation</button>
     </td>
     </tr>	
     <tr>
@@ -208,7 +199,36 @@ not($title/text()=$f/text())</code>, and
     </table>
 </td>
 </tr>
-<td>
+<tr>
+<td valign="top">
+    <table>
+    <tr>
+    <td><b>Output XML Schema</b>
+    </td>
+    </tr>
+    <tr>
+    <td>   
+    <textarea cols="90" rows=10 id="outputschema"></textarea>
+    </td>
+    </tr>
+    </table>
+</td>
+<td valign="top">	
+    <table>
+    <tr>
+    <td>
+    <br><br><br><button onclick="dtdValidator(editor12.getValue(),1)">DTD XML Schema Validation</button>
+    </td>
+    </tr>	
+    <tr>
+    <td>
+    <textarea cols="30" rows=5 id="DTDOutputSchema"></textarea>
+    </td>
+    </tr>
+    </table>
+</td>
+</tr>
+<td align="top">
 <table>
 <tr>
 <td><b>XQuery Program</b></td>
@@ -220,18 +240,29 @@ not($title/text()=$f/text())</code>, and
 </tr>
 </table>
 </td>
-<td>
+<td align="top">
  <table>
     <tr>
     <td>
-    <br><br><br><button onclick="schemaProgramValidator()">XML Schema Program Validation</button>
+    <br><br><br><button onclick="schemaProgramValidator(editor1.getValue(),0)">Input Schema Program Validation</button>
     </td>
     </tr>	
     <tr>
     <td>
-    <textarea cols="25" rows=2 id="XMLSchemaPorgramValidator"></textarea>
+    <textarea cols="5" rows=1 id="XMLSchemaProgramValidator"></textarea>
     </td>
     </tr>
+    <tr>
+    <td>
+    <button onclick="schemaProgramValidator(editor12.getValue(),1)">Output Schema Program Validation</button>
+    </td>
+    </tr>	
+    <tr>
+    <td>
+    <textarea cols="5" rows=1 id="OutputXMLSchemaProgramValidator"></textarea>
+    </td>
+    </tr>
+
     </table>
 </td>
 <tr>
@@ -360,7 +391,7 @@ var editor1 = CodeMirror.fromTextArea(document.getElementById("schema"), {
   lineWrapping: true
 });
   
-  editor1.setSize(600,300);
+ editor1.setSize(600,300);
 
 var editor2 = CodeMirror.fromTextArea(document.getElementById("program"), {
   mode: "application/xquery",
@@ -369,7 +400,7 @@ var editor2 = CodeMirror.fromTextArea(document.getElementById("program"), {
   lineWrapping: true
 });
 
- editor2.setSize(600,150);
+ editor2.setSize(600,210);
 
 var editor3 = CodeMirror.fromTextArea(document.getElementById("input"), {
   mode: "application/xquery",
@@ -409,7 +440,7 @@ var editor5 = CodeMirror.fromTextArea(document.getElementById("inputoutput"), {
 
  editor6.setSize(220,100);
  
- var editor7 = CodeMirror.fromTextArea(document.getElementById("XMLSchemaPorgramValidator"), {
+ var editor7 = CodeMirror.fromTextArea(document.getElementById("XMLSchemaProgramValidator"), {
   mode: "application/xml",
   styleActiveLine: true,
   lineNumbers: false,
@@ -456,7 +487,34 @@ editor10.setSize(220,100);
 
 editor11.setSize(220,100);
 
+var editor12 = CodeMirror.fromTextArea(document.getElementById("outputschema"), {
+  mode: "application/xml",
+  styleActiveLine: true,
+  lineNumbers: true,
+  lineWrapping: true
+});
+  
+ editor12.setSize(600,300);
+
+ var editor13 = CodeMirror.fromTextArea(document.getElementById("DTDOutputSchema"), {
+  mode: "application/xml",
+  styleActiveLine: true,
+  lineNumbers: false,
+  lineWrapping: true  
+});
+
+editor13.setSize(220,100);
  
+ var editor14 = CodeMirror.fromTextArea(document.getElementById("OutputXMLSchemaProgramValidator"), {
+  mode: "application/xml",
+  styleActiveLine: true,
+  lineNumbers: false,
+  lineWrapping: true  
+});
+
+editor14.setSize(220,100);
+ 
+
 </script>
 
 <script language="JavaScript" type="text/javascript">
@@ -471,81 +529,100 @@ function removeAll() {
 	editor7.getDoc().setValue("");
 	$('#depth').val("");
 	editor8.getDoc().setValue("");
+	editor9.getDoc().setValue("");
+	editor10.getDoc().setValue("");
+	editor11.getDoc().setValue("");
+	editor12.getDoc().setValue("");
+	editor13.getDoc().setValue("");
+	editor14.getDoc().setValue("");
 }
-
- function databaseListing(){
-      
-	  var url = 'http://textualtesting.cloudapp.net:8984/rest/appSetup/appSetup.xml';
-	  	  
-	    $.ajax({
-        url: 'elementsFromAPI.php',
-        type: 'GET',
-        data: {url:url},
-        dataType: 'text',
-        success: actualizar
-      })
-      function actualizar(datos){
-
-  		var XML = datos; 
-        
-        var xmlDoc = $.parseXML( XML );
-        var $xml = $( xmlDoc );
-        var $database = $xml.find('database');
-        var $selection = $('#database');
-        
-        $selection.empty();
-        
-        $('#database').append(
-    		$('<option selected value/>')
-        	.text("select a schema")
-        	.val(0)
-        ); 
-        
-        $database.each(function(){
-         var $elem = $(this);
-         var $databaseName = $elem.find('name').text();	
-         $('#database').append(
-    		$('<option />')
-        	.text($databaseName)
-        	.val($databaseName)
-        );      	
-        }
-        )
-       }      
-    }
-
-function loadDatabase(){
-   
-   var url; 
-   
-   if ($('#database').val() != 0)
-   {
-     url = 'http://textualtesting.cloudapp.net:8984/rest/' + $('#database').val() +'/' +  $('#database').val() + '.xsd';
- 
-     $.ajax({
-          url: 'elementsFromAPI.php',
-          type: 'GET',
-          data: {url:url},
-          dataType: 'text',
-          success: actualizar
-      }) 
-      function actualizar(datos){ 
-  		editor1.getDoc().setValue(datos);
-      }
-   }
-}
-
 
 function loadCode() {
    
    var cadena;
    
    var url; 
+      
+   if ($('#examples').val() != 0)
+   	loadDatabase();
+   	
    
-   if ($('#examples').val() =='ex08') {
+   if ($('#examples').val() =='q1') {
+   	    cadena = "declare function tc:q($file)\n{\n <bib> \n { \n  for $b in $file/bib/book \n  where $b/publisher = 'Addison-Wesley' and $b/@year > 1991 \n  return \n  <book year='{$b/@year}'> \n   { $b/title } \n  </book>\n }\n </bib> \n };";
+   	    editor2.getDoc().setValue(cadena);
+        cadena = "declare function tc:i($bib)\n{\n every $b in $bib/book satisfies $b/@year > 1991 \n};"; 
+        editor3.getDoc().setValue(cadena);
+        cadena = "declare function tc:o($bib)\n{\n every $b in $bib/book satisfies $b/@year > 1991 \n};";
+        editor4.getDoc().setValue(cadena);
+        cadena = "declare function tc:io($bibi,$bibo)\n{\n every $bi in $bibi/book satisfies some $bo in $bibo/book satisfies $bo/title=$bi/title \n};";
+        editor5.getDoc().setValue(cadena);
+        $('#depth').val(2);        
+      }
+      else 
+      if ($('#examples').val() =='q2') {
+   	    cadena = "declare function tc:q($file)\n{\n <results> \n { \n  for $b in $file/book, \n  \t $t in $b/title, \n \t $a in $b/author \n return \n \t <result> \n \t\t{ $t }\n\t\t{ $a } \n \t </result>\n }\n </results> \n };";
+   	    editor2.getDoc().setValue(cadena);
+        cadena = "declare function tc:i($file)\n{\n true()\n};"; 
+        editor3.getDoc().setValue(cadena);
+        cadena = "declare function tc:o($results)\n{\n every $result in $results/result satisfies $result/title and $result/author \n};";
+        editor4.getDoc().setValue(cadena);
+        cadena = "declare function tc:io($file,$results)\n{\n every $bi in $file/book satisfies some $bo in $results/result satisfies $bo/title=$bi/title \n};";
+        editor5.getDoc().setValue(cadena);
+        $('#depth').val(2);        
+      } 
+      else
+       if ($('#examples').val() =='q3') {
+   	    cadena = "declare function tc:q($file)\n{\n <results> \n { \n for $b in $file/book \n return \n \t <result> \n \t\t{ $b/title }\n\t\t{ $b/author } \n \t </result>\n }\n </results> \n };";
+   	    editor2.getDoc().setValue(cadena);
+        cadena = "declare function tc:i($file)\n{\n every $book in $file/book satisfies not($book/author) \n};"; 
+        editor3.getDoc().setValue(cadena);
+        cadena = "declare function tc:o($results)\n{\n every $result in $results/result satisfies $result/title and not($result/author) \n};";
+        editor4.getDoc().setValue(cadena);
+        cadena = "declare function tc:io($file,$results)\n{\n true() \n};";
+        editor5.getDoc().setValue(cadena);
+        $('#depth').val(4);        
+      } 
+      else
+        if ($('#examples').val() =='q4') {
+   	    cadena = "declare function tc:q($args)\n{\n <results>\n { \n  let $a := $args/args/fst//author\n  for $last in distinct-values($a/last),\n  $first in distinct-values($a[last=$last]/first)\n  order by $last, $first\n  return\n \t <result>\n \t\t <author> \n \t\t\t<last>{ $last }</last>\n\t\t\t<first>{ $first }</first>\n\t\t</author>\n\t\t{\n\t\t for $b in $args/args/snd/bib/book\n\t\t where some $ba in $b/author satisfies ($ba/last = $last and $ba/first=$first)\n\t\t return $b/title\n\t\t }\n\t</result>\n}\n</results>\n};";
+   	    editor2.getDoc().setValue(cadena);
+        cadena = "declare function tc:i($args)\n{\n every $book in $args/args/fst/book satisfies not($book/author) \n};"; 
+        editor3.getDoc().setValue(cadena);
+        cadena = "declare function tc:o($results)\n{\n true() \n};";
+        editor4.getDoc().setValue(cadena);
+        cadena = "declare function tc:io($args,$results)\n{\n true() \n};";
+        editor5.getDoc().setValue(cadena);
+        $('#depth').val(1);        
+      } 
+      else
+       if ($('#examples').val() =='q6') {
+   	    cadena = "declare function tc:q($file)\n{\n <bib> \n { \n \t for $b in $file//book \n \t where count($b/author) > 0 \n \t return\n \t <book>\n \t\t { $b/title } \n \t\t { for $a in $b/author[position()<=2] \n\t\t return $a }\n \t\t { if (count($b/author) > 2) \n\t\t then <et-al/> \n\t\t else () } \n \t </book>\n } \n </bib> \n };";
+   	    editor2.getDoc().setValue(cadena);
+        cadena = "declare function tc:i($file)\n{\n every $book in $file/book satisfies count($book/author)>=3 \n};"; 
+        editor3.getDoc().setValue(cadena);
+        cadena = "declare function tc:o($bib)\n{\n every $book in $bib/book satisfies count($book/author)=2 \n};";
+        editor4.getDoc().setValue(cadena);
+        cadena = "declare function tc:io($file,$bib)\n{\n every $book in $bib/book satisfies count($book/et-al)>=1 \n};";
+        editor5.getDoc().setValue(cadena);
+        $('#depth').val(5);        
+      }
+      else 
+        if ($('#examples').val() =='q7') {
+   	    cadena = "declare function tc:q($file)\n{\n <bib> \n { \n \t for $b in $file//book \n \t where $b/publisher = 'Addison-Wesley' and $b/@year > 1991 \n \t order by $b/title \n \t return\n \t <book>\n \t\t { $b/@year } \n \t\t { $b/title } \n \t </book>\n } \n </bib> \n };";
+   	    editor2.getDoc().setValue(cadena);
+        cadena = "declare function tc:i($file)\n{\n true() \n};"; 
+        editor3.getDoc().setValue(cadena);
+        cadena = "declare function tc:o($bib)\n{\n let $count := count($bib/book) \n return \n every $i in 1 to $count - 1 satisfies $bib/book[$i]/title<=$bib/book[$i+1]/title \n};";
+        editor4.getDoc().setValue(cadena);
+        cadena = "declare function tc:io($file,$bib)\n{\n true() \n};";
+        editor5.getDoc().setValue(cadena);
+        $('#depth').val(2);        
+      }
+      else 
+        if ($('#examples').val() =='q8') {
    	    cadena = "declare function tc:q($file)\n{\n for $b in $file//book \n let $e := $b/*[contains(string(.), 'Suciu') and ends-with(local-name(.), 'or')] where exists($e)\n return\n <book>\n { $b/title } \n { $e }\n </book>\n };";
    	    editor2.getDoc().setValue(cadena);
-        cadena = "declare function tc:i($file)\n{\n  true() \n};"; 
+        cadena = "declare function tc:i($file)\n{\n true() \n};"; 
         editor3.getDoc().setValue(cadena);
         cadena = "declare function tc:o($books)\n{\n every $book in $books satisfies \n every $item in $book/* satisfies contains(string($item),'Suciu') or name($item)='title'\n};";
         editor4.getDoc().setValue(cadena);
@@ -554,7 +631,7 @@ function loadCode() {
         $('#depth').val(1);        
       }
       else 
-         if ($('#examples').val() =='ex09') {
+         if ($('#examples').val() =='q9') {
    	  	    cadena = "declare function tc:q($file)\n{\n<results>\n{\n for $t in $file//(chapter|section)/title \n where contains($t/text(), 'XML')\n return $t \n}\n<\/results>\n};";
             editor2.getDoc().setValue(cadena);
             cadena = "declare function tc:i($file)\n{\n true()\n};"; 
@@ -564,7 +641,43 @@ function loadCode() {
             cadena = "declare function tc:io($file,$results)\n{\n every $title in $results/* satisfies every $f in $file//(chapter | section)/title satisfies not($title/text()=$f/text())\n};"; 
             editor5.getDoc().setValue(cadena);
             $('#depth').val(5);        
-      }      
+      }  
+      else 
+         if ($('#examples').val() =='q10') {
+   	  	    cadena = "declare function tc:q($file)\n{\n<results>\n{\n let $doc := $file \n for $t in distinct-values($doc//book/title) \n let $p := $doc//book[title = $t]/price \n return \n \t <minprice title='{ $t }'> \n \t\t <price>{ min($p) }</price> \n \t </minprice> \n}\n<\/results>\n};";
+            editor2.getDoc().setValue(cadena);
+            cadena = "declare function tc:i($file)\n{\n true()\n};"; 
+            editor3.getDoc().setValue(cadena);
+            cadena = "declare function tc:o($results)\n{\n count($results/minprice)=count(distinct-values($results/minprice/@title)) \n};"; 
+            editor4.getDoc().setValue(cadena);
+            cadena = "declare function tc:io($file,$results)\n{\n  every $min in $results/* satisfies $min/price <= min($file//book[title = $min/@title]/price) \n};"; 
+            editor5.getDoc().setValue(cadena);
+            $('#depth').val(4);        
+      } 
+      else 
+         if ($('#examples').val() =='q11') {
+   	  	    cadena = "declare function tc:q($args)\n{\n <bib> \n { \n \t for $b in $args/args/fst//book[author] \n\t return \n\t <book> \n\t\t { $b/title } \n\t\t { $b/author } \n\t </book> \n } \n { \n \t for $b in $args/args/snd//book[editor] \n\t return \n\t <reference> \n\t\t { $b/title } \n\t\t {$b/editor/affiliation} \n\t </reference> \n } \n </bib> \n};";
+            editor2.getDoc().setValue(cadena);
+            cadena = "declare function tc:i($args)\n{\n true()\n};"; 
+            editor3.getDoc().setValue(cadena);
+            cadena = "declare function tc:o($results)\n{\n true() \n};"; 
+            editor4.getDoc().setValue(cadena);
+            cadena = "declare function tc:io($args,$results)\n{\n true() \n};"; 
+            editor5.getDoc().setValue(cadena);
+            $('#depth').val(3);        
+      }                  
+      else 
+         if ($('#examples').val() =='q12') {
+   	  	    cadena = "declare function tc:q($args)\n{\n <bib> \n { \n \t for $book1 in $args/args/fst//book, \n \t $book2 in $args/args/snd//book \n \t let $aut1 := for $a in $book1/author \n \t \t order by $a/last, $a/first \n \t\t return $a \n \t let $aut2 := for $a in $book2/author \n\t\t order by $a/last, $a/first \n \t \t return $a \n \t where $book1 << $book2 and not($book1/title = $book2/title) and deep-equal($aut1, $aut2) \n \t return \n \t <book-pair> \n \t { $book1/title } \n \t { $book2/title } \n \t </book-pair> \n } \n </bib> \n};";
+            editor2.getDoc().setValue(cadena);
+            cadena = "declare function tc:i($args)\n{\n true()\n};"; 
+            editor3.getDoc().setValue(cadena);
+            cadena = "declare function tc:o($results)\n{\n true() \n};"; 
+            editor4.getDoc().setValue(cadena);
+            cadena = "declare function tc:io($args,$results)\n{\n true() \n};"; 
+            editor5.getDoc().setValue(cadena);
+            $('#depth').val(3);        
+      }             
 }
 </script>
 
@@ -578,7 +691,7 @@ function runningTesting(){
 	var output = editor4.getValue();
 	var inputoutput = editor5.getValue();
 	var depth = $('#depth').val();
-	    
+	
     if (text == ""){
     	alert('XML Schema is blank');
     } else if (program == ""){
@@ -593,83 +706,155 @@ function runningTesting(){
          			 			alert('Depth is blank');
          			 		} 
      else {
-         			 		
-         		
-    // Drop database
-
-    var url = 'http://textualtesting.cloudapp.net:8984/rest?run=droppingDatabase.xq'; 
-
-    // Create database
-
-    var url = 'http://textualtesting.cloudapp.net:8984/rest?run=creatingDatabase.xq&textArea=' + encodeURIComponent(text); 
-    
-    // Cambiar para que sea síncrono
-      
-     createDatabase(url); 
- 
-     // Run Test Cases
-
-      var url = 'http://textualtesting.cloudapp.net:8984/rest?run=runningXQueryEval.xq&program=' + encodeURIComponent(program) + '&input=' + 
-                encodeURIComponent(input) + '&output=' + encodeURIComponent(output) + '&inputoutput=' + encodeURIComponent(inputoutput) +
-                '&depth=' + encodeURIComponent(depth); 
-
-      runTest(url);
+        
+     databaseCreation(); 
+     
+     runCurlTest();
+	
      }
 }
 
-  function createDatabase(url) {
+function databaseCreation(){
+
+	var text = editor1.getValue();	
+
+	var schemaparam = {
+		 "schema" : text,
+		 "url" : 'http://textualtesting.cloudapp.net:8984/databaseCreation',
+		 "option" : 0
+	};
+	
     $.ajax({
-      url: 'elementsFromAPI.php',
-      type: 'GET',
-      data: {url:url},
-      dataType: 'text',
-      async: false,
-    })
- }
- 
-   function runTest(url) {
-    $.ajax({
-      url: 'elementsFromAPI.php',
-      type: 'GET',
-      data: {url:url},
-      dataType: 'text',
-      success: actualizar
-    }
-    )
-      function actualizar(datos){
-  		editor8.getDoc().setValue(datos);;
-    }
-  }
+    	  data: schemaparam,
+          url: 'elementsFromCURL.php',
+          type:  'POST',
+          async: false,
+        });
+}
+
+function loadDatabase(){
+	
+   var cadena;
+   
+   cadena = "schema_" + $('#examples').val();
+	
+	var schemaparam = {
+		"schema" : cadena,
+		 "url" : 'http://textualtesting.cloudapp.net:8984/loadDatabase',
+		 "option" : 0
+	};
+	
+	$.ajax({
+       data: schemaparam,
+       url: 'elementsFromCURL.php',
+       type:  'POST',
+       beforeSend: function () {
+                        editor1.getDoc().setValue("Processing, Wait a moment please...");
+                },
+          success:  function (response) {
+                        editor1.getDoc().setValue(response);
+                }
+        });
+}
+
+function runCurlTest(){
+	
+	var schemaparam = {
+		 "program" : editor2.getValue(),
+		 "input" :  editor3.getValue(),
+		 "output" : editor4.getValue(),
+		 "inputoutput" : editor5.getValue(),
+		 "depth" : $('#depth').val(),
+		 "url" : 'http://textualtesting.cloudapp.net:8984/runningTest',
+		 "option" : 1
+	};
+	
+	$.ajax({
+       data: schemaparam,
+       url: 'elementsFromCURL.php',
+       type:  'POST',
+       beforeSend: function () {
+                        editor8.getDoc().setValue("Processing, Wait a moment please...");
+                },
+          success:  function (response) {
+                        editor8.getDoc().setValue(response);
+                }
+        });
+}
   
+
 </script>
 
 <script>
 	
-function dtdValidator(){
+function dtdValidator(text,flag){
 	
-    var text = editor1.getValue();  
+   var schemaparam = {
+		 "schema" : text, 
+		 "url" : 'http://textualtesting.cloudapp.net:8984/DTDValidation',
+		 "option" : 0
+	};
     
     if (text != "")
     {
       
-      var url = 'http://textualtesting.cloudapp.net:8984/rest?run=dtdValidation.xq&textArea=' + encodeURIComponent(text); 
-
       $.ajax({
-      url: 'elementsFromAPI.php',
-          type: 'GET',
-          data: {url:url},
-          dataType: 'text',
-          success: actualizar
-      }) 
-      function actualizar(datos){ 
-  		editor6.getDoc().setValue(datos);
-      }
+    	  data: schemaparam,
+          url: 'elementsFromCURL.php',
+          type:  'POST',
+          beforeSend: function () {
+          	           if (flag == 0)
+                        editor6.getDoc().setValue("Processing, Wait a moment please...");
+                       else 
+                        editor13.getDoc().setValue("Processing, Wait a moment please...");
+               }, 
+          success:  function (response) {
+          	           if (flag == 0)
+                         editor6.getDoc().setValue(response);
+                      else editor13.getDoc().setValue(response);
+                }
+        });
    }
    else {
    	alert('XML Schema is blank');
    }
-}	
-	
+}		
+
+function schemaProgramValidator(text,flag){
+
+   var program = editor2.getValue();
+
+   var schemaparam = {
+		 "schema" : text,
+		 "program" : program,
+		 "url" : 'http://textualtesting.cloudapp.net:8984/XMLProgramValidation',
+		 "option" : 2
+	};
+    
+    if (text == "")
+      alert('XML Schema is blank');
+    else if (program == "")
+         alert('Program is blank');
+         else {
+         	
+      $.ajax({
+    	  data: schemaparam,
+          url: 'elementsFromCURL.php',
+          type:  'POST',
+          beforeSend: function () {
+          	           if (flag == 0)
+                        editor7.getDoc().setValue("Processing, Wait a moment please...");
+                      else editor14.getDoc().setValue("Processing, Wait a moment please...");
+                },
+          success:  function (response) {
+          	           if (flag == 0)
+                        editor7.getDoc().setValue(response);
+                       else editor14.getDoc().setValue(response);
+                }
+        });
+    }  		
+}
+
 </script>
 
 </body>
