@@ -244,7 +244,7 @@ not($title/text()=$f/text())</code>, and
  <table>
     <tr>
     <td>
-    <br><br><br><button onclick="schemaProgramValidator(editor1.getValue(),0)">Input Schema Program Validation</button>
+    <button onclick="schemaProgramValidator(editor1.getValue(),0)">Input Schema Program Validation</button>
     </td>
     </tr>	
     <tr>
@@ -252,7 +252,7 @@ not($title/text()=$f/text())</code>, and
     <textarea cols="5" rows=1 id="XMLSchemaProgramValidator"></textarea>
     </td>
     </tr>
-    <tr>
+<!--    <tr>
     <td>
     <button onclick="schemaProgramValidator(editor12.getValue(),1)">Output Schema Program Validation</button>
     </td>
@@ -262,7 +262,7 @@ not($title/text()=$f/text())</code>, and
     <textarea cols="5" rows=1 id="OutputXMLSchemaProgramValidator"></textarea>
     </td>
     </tr>
-
+-->
     </table>
 </td>
 <tr>
