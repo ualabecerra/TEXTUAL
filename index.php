@@ -307,7 +307,7 @@ not($title/text()=$f/text())</code>, and
 	    <table>
     <tr>
     <td>
-    <br><br><br><button onclick="schemaInputValidator()">XML Schema Input Validation</button>
+    <br><br><br><button onclick="schemaOnePropertyValidator(editor1.getValue(),editor3.getValue(),0)">XML Schema Input Validation</button>
     </td>
     </tr>	
     <tr>
@@ -335,7 +335,7 @@ not($title/text()=$f/text())</code>, and
 	    <table>
     <tr>
     <td>
-    <br><br><br><button onclick="schemaOutputValidator()">XML Schema Output Validation</button>
+    <br><br><br><button onclick="schemaOnePropertyValidator(editor12.getValue(),editor4.getValue(),1)">XML Schema Output Validation</button>
     </td>
     </tr>	
     <tr>
@@ -363,7 +363,7 @@ not($title/text()=$f/text())</code>, and
 	    <table>
     <tr>
     <td>
-    <br><br><br><button onclick="schemaInputOutputValidator()">XML Schema Input Output Validation</button>
+    <br><br><br><button onclick="schemaTwoPropertiesValidator(editor1.getValue(),editor12.getValue(),editor5.getValue())">XML Schema Input Output Validation</button>
     </td>
     </tr>	
     <tr>
@@ -560,7 +560,7 @@ function loadCode() {
       }
       else 
       if ($('#examples').val() =='q2') {
-   	    cadena = "declare function tc:q($file)\n{\n <results> \n { \n  for $b in $file/book, \n  \t $t in $b/title, \n \t $a in $b/author \n return \n \t <result> \n \t\t{ $t }\n\t\t{ $a } \n \t </result>\n }\n </results> \n };";
+   	    cadena = "declare function tc:q($file)\n{\n <results> \n { \n  for $b in $file/bib/book, \n  \t $t in $b/title, \n \t $a in $b/author \n return \n \t <result> \n \t\t{ $t }\n\t\t{ $a } \n \t </result>\n }\n </results> \n };";
    	    editor2.getDoc().setValue(cadena);
         cadena = "declare function tc:i($file)\n{\n true()\n};"; 
         editor3.getDoc().setValue(cadena);
@@ -572,7 +572,7 @@ function loadCode() {
       } 
       else
        if ($('#examples').val() =='q3') {
-   	    cadena = "declare function tc:q($file)\n{\n <results> \n { \n for $b in $file/book \n return \n \t <result> \n \t\t{ $b/title }\n\t\t{ $b/author } \n \t </result>\n }\n </results> \n };";
+   	    cadena = "declare function tc:q($file)\n{\n <results> \n { \n for $b in $file/bib/book \n return \n \t <result> \n \t\t{ $b/title }\n\t\t{ $b/author } \n \t </result>\n }\n </results> \n };";
    	    editor2.getDoc().setValue(cadena);
         cadena = "declare function tc:i($file)\n{\n every $book in $file/book satisfies not($book/author) \n};"; 
         editor3.getDoc().setValue(cadena);
@@ -819,6 +819,74 @@ function dtdValidator(text,flag){
    	alert('XML Schema is blank');
    }
 }		
+
+
+function schemaOnePropertyValidator(text,program,flag){
+ 
+   var schemaparam = {
+		 "schema" : text,
+		 "program" : program,
+		 "url" : 'http://textualtesting.cloudapp.net:8984/XMLOnePropertyValidation',
+		 "option" : 2
+	};
+    
+    if (text == "")
+      alert('XML Schema is blank');
+    else if (program == "")
+         alert('Program is blank');
+         else {
+         	
+      $.ajax({
+    	  data: schemaparam,
+          url: 'elementsFromCURL.php',
+          type:  'POST',
+          beforeSend: function () {
+          	           if (flag == 0)
+                        editor9.getDoc().setValue("Processing, Wait a moment please...");
+                      else editor10.getDoc().setValue("Processing, Wait a moment please...");
+                },
+          success:  function (response) {
+          	           if (flag == 0)
+                        editor9.getDoc().setValue(response);
+                       else editor10.getDoc().setValue(response);
+                }
+        });
+    }  		
+}
+
+
+function schemaTwoPropertiesValidator(inputText,outputText,program){
+ 
+   var schemaparam = {
+		 "inputSchema" : inputText,
+		 "outputSchema" : outputText,
+		 "program" : program,
+		 "url" : 'http://textualtesting.cloudapp.net:8984/XMLTwoPropertyValidation',
+		 "option" : 3
+	};
+    
+  
+    if (inputText == "")
+      alert('XML Input Schema is blank');
+      else if (outputText == "")
+           alert('XML Output Schema is blank');
+           else if (program == "")
+              alert('Program is blank');
+              else {
+         	
+      $.ajax({
+    	  data: schemaparam,
+          url: 'elementsFromCURL.php',
+          type:  'POST',
+          beforeSend: function () {
+                        editor11.getDoc().setValue("Processing, Wait a moment please...");
+                },
+          success:  function (response) {
+                       editor11.getDoc().setValue(response);
+                }
+        });
+    } 
+}
 
 function schemaProgramValidator(text,flag){
 

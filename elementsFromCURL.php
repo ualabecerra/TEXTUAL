@@ -14,6 +14,10 @@
   else if ($option == 2) 
   	$fields = array('content' => urldecode($_POST['schema']),
   	                'program' => urldecode($_POST['program']));
+  else if ($option == 3)
+       $fields = array('input' => urldecode($_POST['inputSchema']),
+                       'output' => urldecode($_POST['outputSchema']),
+  	                   'program' => urldecode($_POST['program']));
   	                
   $ch = curl_init();
 
