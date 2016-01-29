@@ -550,7 +550,7 @@ function loadCode() {
    if ($('#examples').val() =='q1') {
    	    cadena = "declare function tc:q($file)\n{\n <bib> \n { \n  for $b in $file/bib/book \n  where $b/publisher = 'Addison-Wesley' and $b/@year > 1991 \n  return \n  <book year='{$b/@year}'> \n   { $b/title } \n  </book>\n }\n </bib> \n };";
    	    editor2.getDoc().setValue(cadena);
-        cadena = "declare function tc:i($bib)\n{\n every $b in $bib/book satisfies $b/@year > 1991 \n};"; 
+        cadena = "declare function tc:i($bib)\n{\n every $b in $bib/bib/book satisfies $b/@year > 1991 \n};"; 
         editor3.getDoc().setValue(cadena);
         cadena = "declare function tc:o($bib)\n{\n every $b in $bib/book satisfies $b/@year > 1991 \n};";
         editor4.getDoc().setValue(cadena);
@@ -566,7 +566,7 @@ function loadCode() {
         editor3.getDoc().setValue(cadena);
         cadena = "declare function tc:o($results)\n{\n every $result in $results/result satisfies $result/title and $result/author \n};";
         editor4.getDoc().setValue(cadena);
-        cadena = "declare function tc:io($file,$results)\n{\n every $bi in $file/book satisfies some $bo in $results/result satisfies $bo/title=$bi/title \n};";
+        cadena = "declare function tc:io($file,$results)\n{\n every $bi in $file/bib/book satisfies some $bo in $results/result satisfies $bo/title=$bi/author \n};";
         editor5.getDoc().setValue(cadena);
         $('#depth').val(2);        
       } 
@@ -574,9 +574,9 @@ function loadCode() {
        if ($('#examples').val() =='q3') {
    	    cadena = "declare function tc:q($file)\n{\n <results> \n { \n for $b in $file/bib/book \n return \n \t <result> \n \t\t{ $b/title }\n\t\t{ $b/author } \n \t </result>\n }\n </results> \n };";
    	    editor2.getDoc().setValue(cadena);
-        cadena = "declare function tc:i($file)\n{\n every $book in $file/book satisfies not($book/author) \n};"; 
+        cadena = "declare function tc:i($file)\n{\n every $book in $file/bib/book satisfies not($book/author) \n};"; 
         editor3.getDoc().setValue(cadena);
-        cadena = "declare function tc:o($results)\n{\n every $result in $results/result satisfies $result/title and not($result/author) \n};";
+        cadena = "declare function tc:o($results)\n{\n every $result in $results/result satisfies $result/title and $result/author \n};";
         editor4.getDoc().setValue(cadena);
         cadena = "declare function tc:io($file,$results)\n{\n true() \n};";
         editor5.getDoc().setValue(cadena);
@@ -584,27 +584,39 @@ function loadCode() {
       } 
       else
         if ($('#examples').val() =='q4') {
-   	    cadena = "declare function tc:q($args)\n{\n <results>\n { \n  let $a := $args/args/fst//author\n  for $last in distinct-values($a/last),\n  $first in distinct-values($a[last=$last]/first)\n  order by $last, $first\n  return\n \t <result>\n \t\t <author> \n \t\t\t<last>{ $last }</last>\n\t\t\t<first>{ $first }</first>\n\t\t</author>\n\t\t{\n\t\t for $b in $args/args/snd/bib/book\n\t\t where some $ba in $b/author satisfies ($ba/last = $last and $ba/first=$first)\n\t\t return $b/title\n\t\t }\n\t</result>\n}\n</results>\n};";
+   	    cadena = "declare function tc:q($args)\n{\n <results>\n { \n  let $a := $args/args/fst//author\n  for $last in distinct-values($a/last),\n  \t $first in distinct-values($a[last=$last]/first)\n  order by $last, $first\n  return\n \t <result>\n \t\t <author> \n \t\t\t<last>{ $last }</last>\n\t\t\t<first>{ $first }</first>\n\t\t</author>\n\t\t{\n\t\t for $b in $args/args/snd/bib/book\n\t\t where some $ba in $b/author satisfies ($ba/last = $last and $ba/first=$first)\n\t\t return $b/title\n\t\t }\n\t</result>\n}\n</results>\n};";
    	    editor2.getDoc().setValue(cadena);
-        cadena = "declare function tc:i($args)\n{\n every $book in $args/args/fst/book satisfies not($book/author) \n};"; 
+        cadena = "declare function tc:i($args)\n{\n true() \n};"; 
         editor3.getDoc().setValue(cadena);
-        cadena = "declare function tc:o($results)\n{\n true() \n};";
+        cadena = "declare function tc:o($results)\n{\n count($results/result/author) >= 0 \n};";
         editor4.getDoc().setValue(cadena);
-        cadena = "declare function tc:io($args,$results)\n{\n true() \n};";
+        cadena = "declare function tc:io($args,$results)\n{\n every $item in $results/result/title satisfies some $title in $args/args/snd/bib/book/title satisfies $title=$item \n};";
         editor5.getDoc().setValue(cadena);
         $('#depth').val(1);        
       } 
       else
+        if ($('#examples').val() =='q5') {
+   	    cadena = "declare function tc:q($args)\n{\n <books-with-prices> \n { \n \t for $b in $args/args/fst//book, \n \t \t $a in $args/args/snd//entry \n \t where $b/title = $a/title \n \t return \n \t \t <book-with-prices> \n \t \t \t { $b/title } \n \t \t \t <price-bstore2>{ $a/price/text() }</price-bstore2> \n \t \t \t <price-bstore1>{ $b/price/text() }</price-bstore1> \n \t \t </book-with-prices> \n \t } \n </books-with-prices> \n };";
+   	    editor2.getDoc().setValue(cadena);
+        cadena = "declare function tc:i($file)\n{\n true() \n};"; 
+        editor3.getDoc().setValue(cadena);
+        cadena = "declare function tc:o($bib)\n{\n every $book in $bib/book-with-prices satisfies count($book/price-bstore2)=1 \n};";
+        editor4.getDoc().setValue(cadena);
+        cadena = "declare function tc:io($file,$bib)\n{\n every $title in $bib/book-with-prices/title satisfies some $title2 in $file/fst/bib/book/title satisfies $title=$title2 \n};";
+        editor5.getDoc().setValue(cadena);
+        $('#depth').val(2);        
+      }
+      else 
        if ($('#examples').val() =='q6') {
    	    cadena = "declare function tc:q($file)\n{\n <bib> \n { \n \t for $b in $file//book \n \t where count($b/author) > 0 \n \t return\n \t <book>\n \t\t { $b/title } \n \t\t { for $a in $b/author[position()<=2] \n\t\t return $a }\n \t\t { if (count($b/author) > 2) \n\t\t then <et-al/> \n\t\t else () } \n \t </book>\n } \n </bib> \n };";
    	    editor2.getDoc().setValue(cadena);
-        cadena = "declare function tc:i($file)\n{\n every $book in $file/book satisfies count($book/author)>=3 \n};"; 
+        cadena = "declare function tc:i($file)\n{\n every $book in $file/bib/book satisfies count($book/author)>=3 \n};"; 
         editor3.getDoc().setValue(cadena);
         cadena = "declare function tc:o($bib)\n{\n every $book in $bib/book satisfies count($book/author)=2 \n};";
         editor4.getDoc().setValue(cadena);
-        cadena = "declare function tc:io($file,$bib)\n{\n every $book in $bib/book satisfies count($book/et-al)>=1 \n};";
+        cadena = "declare function tc:io($file,$bib)\n{\n every $book in $bib/book satisfies count($book/et-al)=1 \n};";
         editor5.getDoc().setValue(cadena);
-        $('#depth').val(5);        
+        $('#depth').val(3);        
       }
       else 
         if ($('#examples').val() =='q7') {
@@ -612,7 +624,7 @@ function loadCode() {
    	    editor2.getDoc().setValue(cadena);
         cadena = "declare function tc:i($file)\n{\n true() \n};"; 
         editor3.getDoc().setValue(cadena);
-        cadena = "declare function tc:o($bib)\n{\n let $count := count($bib/book) \n return \n every $i in 1 to $count - 1 satisfies $bib/book[$i]/title<=$bib/book[$i+1]/title \n};";
+        cadena = "declare function tc:o($bib)\n{\n let $count := count($bib/book) \n return \n every $i in 1 to $count - 1 satisfies $bib/book[$i]/title <= $bib/book[$i+1]/title \n};";
         editor4.getDoc().setValue(cadena);
         cadena = "declare function tc:io($file,$bib)\n{\n true() \n};";
         editor5.getDoc().setValue(cadena);
@@ -620,7 +632,7 @@ function loadCode() {
       }
       else 
         if ($('#examples').val() =='q8') {
-   	    cadena = "declare function tc:q($file)\n{\n for $b in $file//book \n let $e := $b/*[contains(string(.), 'Suciu') and ends-with(local-name(.), 'or')] where exists($e)\n return\n <book>\n { $b/title } \n { $e }\n </book>\n };";
+   	    cadena = "declare function tc:q($file)\n{\n for $b in $file//book \n let $e := $b/*[contains(string(.), 'Suciu') \n \t and ends-with(local-name(.), 'or')] \n where exists($e)\n return\n <book>\n { $b/title } \n { $e }\n </book>\n };";
    	    editor2.getDoc().setValue(cadena);
         cadena = "declare function tc:i($file)\n{\n true() \n};"; 
         editor3.getDoc().setValue(cadena);
@@ -638,7 +650,7 @@ function loadCode() {
             editor3.getDoc().setValue(cadena);
             cadena = "declare function tc:o($results)\n{\n every $result in $results/* satisfies contains($result/text(),'XML')\n};"; 
             editor4.getDoc().setValue(cadena);
-            cadena = "declare function tc:io($file,$results)\n{\n every $title in $results/* satisfies every $f in $file//(chapter | section)/title satisfies not($title/text()=$f/text())\n};"; 
+            cadena = "declare function tc:io($file,$results)\n{\n every $title in $results/* satisfies some $f in $file//(chapter | section)/title satisfies not($title/text()=$f/text())\n};"; 
             editor5.getDoc().setValue(cadena);
             $('#depth').val(5);        
       }  
@@ -660,11 +672,11 @@ function loadCode() {
             editor2.getDoc().setValue(cadena);
             cadena = "declare function tc:i($args)\n{\n true()\n};"; 
             editor3.getDoc().setValue(cadena);
-            cadena = "declare function tc:o($results)\n{\n true() \n};"; 
+            cadena = "declare function tc:o($results)\n{\n every $book in $results/book satisfies $book/author \n};"; 
             editor4.getDoc().setValue(cadena);
             cadena = "declare function tc:io($args,$results)\n{\n true() \n};"; 
             editor5.getDoc().setValue(cadena);
-            $('#depth').val(3);        
+            $('#depth').val(1);        
       }                  
       else 
          if ($('#examples').val() =='q12') {
@@ -672,11 +684,11 @@ function loadCode() {
             editor2.getDoc().setValue(cadena);
             cadena = "declare function tc:i($args)\n{\n true()\n};"; 
             editor3.getDoc().setValue(cadena);
-            cadena = "declare function tc:o($results)\n{\n true() \n};"; 
+            cadena = "declare function tc:o($results)\n{\n every $book in $results/book-pair satisfies count(distinct-values($book/title))=2 \n};"; 
             editor4.getDoc().setValue(cadena);
             cadena = "declare function tc:io($args,$results)\n{\n true() \n};"; 
             editor5.getDoc().setValue(cadena);
-            $('#depth').val(3);        
+            $('#depth').val(1);        
       }             
 }
 </script>
@@ -736,7 +748,7 @@ function loadDatabase(){
 	
    var cadena;
    
-   cadena = "schema_" + $('#examples').val();
+   cadena = "schemai_" + $('#examples').val();
 	
 	var schemaparam = {
 		"schema" : cadena,
@@ -755,6 +767,28 @@ function loadDatabase(){
                         editor1.getDoc().setValue(response);
                 }
         });
+        
+     cadena = "schemao_" + $('#examples').val();
+	
+	var schemaparam = {
+		"schema" : cadena,
+		 "url" : 'http://textualtesting.cloudapp.net:8984/loadDatabase',
+		 "option" : 0
+	};
+	
+	$.ajax({
+       data: schemaparam,
+       url: 'elementsFromCURL.php',
+       type:  'POST',
+       beforeSend: function () {
+                        editor12.getDoc().setValue("Processing, Wait a moment please...");
+                },
+          success:  function (response) {
+                        editor12.getDoc().setValue(response);
+                }
+        });
+ //  editor12
+ 
 }
 
 function runCurlTest(){
