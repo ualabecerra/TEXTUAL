@@ -823,10 +823,15 @@ function dtdValidator(text,flag){
 
 function schemaOnePropertyValidator(text,program,flag){
  
+   var url;
+   
+   if (flag == 0) url = 'http://textualtesting.cloudapp.net:8984/XMLInputPropertyValidation';
+   else url = 'http://textualtesting.cloudapp.net:8984/XMLOutputPropertyValidation';
+
    var schemaparam = {
 		 "schema" : text,
 		 "program" : program,
-		 "url" : 'http://textualtesting.cloudapp.net:8984/XMLOnePropertyValidation',
+		 "url" : url,
 		 "option" : 2
 	};
     
@@ -861,7 +866,7 @@ function schemaTwoPropertiesValidator(inputText,outputText,program){
 		 "inputSchema" : inputText,
 		 "outputSchema" : outputText,
 		 "program" : program,
-		 "url" : 'http://textualtesting.cloudapp.net:8984/XMLTwoPropertyValidation',
+		 "url" : 'http://textualtesting.cloudapp.net:8984/XMLInputOutputPropertyValidation',
 		 "option" : 3
 	};
     
