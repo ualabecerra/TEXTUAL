@@ -1,0 +1,47 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:simpleType name="lastType">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="Buneman"/>
+    <xs:enumeration value="Suciu"/>
+  </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="firstType">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="Dan"/>
+    <xs:enumeration value="Peter"/>
+  </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="titleType">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="UML"/>
+    <xs:enumeration value="XML"/>
+  </xs:restriction>
+</xs:simpleType>
+<xs:element name="bib">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="book" minOccurs="1" maxOccurs="unbounded">
+  <xs:complexType>
+    <xs:sequence>
+      
+       
+       <xs:element name="author" minOccurs="0" maxOccurs="unbounded">
+      <xs:complexType>
+       <xs:sequence>
+          
+            <xs:element name="last" type="xs:string"/>
+            <xs:element name="first" type="xs:string"/>
+           
+       </xs:sequence> 
+       </xs:complexType>
+      </xs:element>
+      <xs:element name="title" type="titleType"/>
+           
+    </xs:sequence>
+     
+  </xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>

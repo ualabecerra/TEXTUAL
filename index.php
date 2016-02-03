@@ -95,7 +95,7 @@
 			<div id="tabs-1">
 			
 			<p>
-			The goal of the project is the testing of XQuery programs. A tool called (<code>TEXTUAL</code>) 
+			The goal of the project is the testing of XQuery programs. A tool, called <code>TEXTUAL</code>, 
 			has been implemented in order to test XQuery programs. The tool is based on the ideas shown in the following papers:
                         <ul class="noitems">
                                 <li>Jesús Manuel Almendros-Jiménez, Antonio Becerra Terón. <br/>

@@ -1,0 +1,32 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+ <xs:simpleType name="priceType">
+   <xs:restriction base="xs:integer">
+     <xs:enumeration value="80"/>
+     <xs:enumeration value="150"/>
+   </xs:restriction>
+ </xs:simpleType>
+ <xs:simpleType name="titleType">
+   <xs:restriction base="xs:string">
+     <xs:enumeration value="UML"/>
+     <xs:enumeration value="XML"/>
+   </xs:restriction>
+ </xs:simpleType>
+ <xs:element name="results">
+   <xs:complexType>
+     <xs:sequence>
+       <xs:element name="minprice" minOccurs="1" maxOccurs="unbounded">
+         <xs:complexType>
+           <xs:sequence>
+             <xs:element name="price" type="priceType"/>
+
+           </xs:sequence>
+         <xs:attribute name="title" type="titleType"/>
+         </xs:complexType>
+
+       </xs:element>
+
+     </xs:sequence>
+     
+   </xs:complexType>
+ </xs:element>
+</xs:schema>

@@ -1,0 +1,30 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:simpleType name="titleType">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="UML"/>
+    <xs:enumeration value="XML"/>
+  </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="priceType">
+  <xs:restriction base="xs:integer">
+    <xs:enumeration value="200"/>
+    <xs:enumeration value="100"/>
+  </xs:restriction>
+</xs:simpleType>
+<xs:element name="books-with-prices">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="book-with-prices" minOccurs="1" maxOccurs="unbounded">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="title" type="titleType"/>
+      
+      <xs:element name="price-bstore1" type="priceType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="price-bstore2" type="priceType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>

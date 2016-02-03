@@ -1,0 +1,78 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:simpleType name="authorType">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="Buneman"/>
+     
+  </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="affiliationType">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="MIT"/>
+     
+  </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="titleType">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="UML"/>
+    
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:element name="args">
+<xs:complexType>
+<xs:sequence>
+
+<xs:element name="fst">
+<xs:complexType>
+<xs:sequence>
+
+<xs:element name="bib">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="book" minOccurs="1" maxOccurs="unbounded">
+  <xs:complexType>
+    <xs:sequence>
+       <xs:element name="author" type="authorType"/>
+      <xs:element name="title" type="titleType"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:element name="snd">
+<xs:complexType>
+<xs:sequence>
+
+
+<xs:element name="bib">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="book" minOccurs="1" maxOccurs="unbounded">
+  <xs:complexType>
+    <xs:sequence>
+       <xs:element name="editor" minOccurs="1" maxOccurs="unbounded">
+      <xs:complexType>
+       <xs:sequence>
+            <xs:element name="affiliation" type="affiliationType"/>
+       </xs:sequence> 
+       </xs:complexType>
+      </xs:element>
+      <xs:element name="title" type="titleType"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>

@@ -1,0 +1,21 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:simpleType name="titleType">
+  <xs:restriction base="xs:integer">
+    <xs:enumeration value="UML"/>
+    <xs:enumeration value="XML"/>
+  </xs:restriction>
+</xs:simpleType>
+<xs:element name="bib">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="book-pair" minOccurs="1" maxOccurs="unbounded">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="title" type="titleType" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>
