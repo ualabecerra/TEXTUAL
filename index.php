@@ -634,7 +634,7 @@ function loadCode() {
    	    editor2.getDoc().setValue(cadena);
         cadena = "declare function tc:i($file)\n{\n true() \n};"; 
         editor3.getDoc().setValue(cadena);
-        cadena = "declare function tc:o($bib)\n{\n  let $count := count($bib/book) return every $i in 1 to $count - 1 satisfies $bib/book[$i]/title <= $bib/book[$i+]/title  \n};";
+        cadena = "declare function tc:o($bib)\n{\n  let $count := count($bib/book) return every $i in 1 to $count - 1 satisfies $bib/book[$i]/title <= $bib/book[sum($i,1)]/title  \n};";
         editor4.getDoc().setValue(cadena);
         cadena = "declare function tc:io($file,$bib)\n{\n true() \n};";
         editor5.getDoc().setValue(cadena);
@@ -658,9 +658,9 @@ function loadCode() {
             editor2.getDoc().setValue(cadena);
             cadena = "declare function tc:i($file)\n{\n true()\n};"; 
             editor3.getDoc().setValue(cadena);
-            cadena = "declare function tc:o($results)\n{\n every $result in $results satisfies contains($result/text(),'XML') \n};"; 
+            cadena = "declare function tc:o($results)\n{\n every $result in $results/title satisfies contains($result/text(),'XML')  \n};"; 
             editor4.getDoc().setValue(cadena);
-            cadena = "declare function tc:io($file,$results)\n{\n every $title in $results satisfies some $f in $file//(chapter | section)/title satisfies not($title/text()=$f/text()) \n};"; 
+            cadena = "declare function tc:io($file,$results)\n{\n every $title in $results/title satisfies some $f in $file//(chapter | section)/title satisfies not($title/text()=$f/text()) \n};"; 
             editor5.getDoc().setValue(cadena);
             $('#depth').val(5);        
       }  
@@ -670,7 +670,7 @@ function loadCode() {
             editor2.getDoc().setValue(cadena);
             cadena = "declare function tc:i($file)\n{\n true()\n};"; 
             editor3.getDoc().setValue(cadena);
-            cadena = "declare function tc:o($results)\n{\n count($results)=count(distinct-values($results/@title)) \n};"; 
+            cadena = "declare function tc:o($results)\n{\n count($results/minprice) = \n count(distinct-values($results/minprice/@title)) \n};"; 
             editor4.getDoc().setValue(cadena);
             cadena = "declare function tc:io($file,$results)\n{\n $results/minprice/price = min(let $books := $file//book where $books/title = $results/minprice/@title return $books/price) \n};"; 
             editor5.getDoc().setValue(cadena);
