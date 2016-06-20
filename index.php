@@ -742,7 +742,7 @@ function databaseCreation(){
 
 	var schemaparam = {
 		 "schema" : text,
-		 "url" : 'http://textualtesting.cloudapp.net:8984/databaseCreation',
+		 "url" : 'minerva.ual.es:8984/databaseCreation',
 		 "option" : 0
 	};
 	
@@ -762,7 +762,7 @@ function loadDatabase(){
 	
 	var schemaparam = {
 		"schema" : cadena,
-		 "url" : 'http://textualtesting.cloudapp.net:8984/loadDatabase',
+		 "url" : 'http://minerva.ual.es:8984/loadDatabase',
 		 "option" : 0
 	};
 	
@@ -782,7 +782,7 @@ function loadDatabase(){
 	
 	var schemaparam = {
 		"schema" : cadena,
-		 "url" : 'http://textualtesting.cloudapp.net:8984/loadDatabase',
+		 "url" : 'http://minerva.ual.es:8984/loadDatabase',
 		 "option" : 0
 	};
 	
@@ -809,7 +809,7 @@ function runCurlTest(){
 		 "output" : editor4.getValue(),
 		 "inputoutput" : editor5.getValue(),
 		 "depth" : $('#depth').val(),
-		 "url" : 'http://textualtesting.cloudapp.net:8984/runningTest',
+		 "url" : 'http://minerva.ual.es:8984/runningTest',
 		 "option" : 1
 	};
 	
@@ -835,7 +835,7 @@ function dtdValidator(text,flag){
 	
    var schemaparam = {
 		 "schema" : text, 
-		 "url" : 'http://textualtesting.cloudapp.net:8984/DTDValidation',
+		 "url" : 'http://minerva.ual.es:8984/DTDValidation',
 		 "option" : 0
 	};
     
@@ -869,8 +869,8 @@ function schemaOnePropertyValidator(text,program,flag){
  
    var url;
    
-   if (flag == 0) url = 'http://textualtesting.cloudapp.net:8984/XMLInputPropertyValidation';
-   else url = 'http://textualtesting.cloudapp.net:8984/XMLOutputPropertyValidation';
+   if (flag == 0) url = 'http://minerva.ual.es:8984/XMLInputPropertyValidation';
+   else url = 'http://minerva.ual.es:8984/XMLOutputPropertyValidation';
 
    var schemaparam = {
 		 "schema" : text,
@@ -910,7 +910,7 @@ function schemaTwoPropertiesValidator(inputText,outputText,program){
 		 "inputSchema" : inputText,
 		 "outputSchema" : outputText,
 		 "program" : program,
-		 "url" : 'http://textualtesting.cloudapp.net:8984/XMLInputOutputPropertyValidation',
+		 "url" : 'http://minerva.ual.es:8984/XMLInputOutputPropertyValidation',
 		 "option" : 3
 	};
     
@@ -944,7 +944,7 @@ function schemaProgramValidator(text,flag){
    var schemaparam = {
 		 "schema" : text,
 		 "program" : program,
-		 "url" : 'http://textualtesting.cloudapp.net:8984/XMLProgramValidation',
+		 "url" : 'http://minerva.ual.es:8984/XMLProgramValidation',
 		 "option" : 2
 	};
     
