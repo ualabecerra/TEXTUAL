@@ -1,0 +1,34 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:simpleType name="yearType">
+  <xs:restriction base="xs:integer">
+    <xs:enumeration value="1987"/>
+    <xs:enumeration value="2000"/>
+  </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="titleType">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="UML"/>
+  </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="publisherType">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="Addison-Wesley"/>
+    <xs:enumeration value="Springer"/>
+  </xs:restriction>
+</xs:simpleType>
+<xs:element name="bib">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="book" minOccurs="1" maxOccurs="unbounded">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="title" type="titleType"/>
+      <xs:element name="publisher" type="publisherType"/>   
+    </xs:sequence>
+     <xs:attribute name="year" type="yearType" use="required"/>
+  </xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>

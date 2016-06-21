@@ -1,5 +1,8 @@
  <?php 
- 
+
+   $userBaseX = "admin";
+   $passwordBaseX = "admin";
+	
   $url = $_POST['url'];
   $option = $_POST['option'];
 
@@ -26,11 +29,18 @@
   curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Authorization: Basic ' . base64_encode("$userBaseX:$passwordBaseX")));
   curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
   curl_setopt( $ch, CURLOPT_POSTFIELDS, $fields);
-   
+  curl_setopt( $ch, CURLOPT_NOSIGNAL, 1);
+  curl_setopt( $ch, CURLOPT_TIMEOUT_MS, 3000);
+
   $result = curl_exec($ch);
   
   curl_close($ch);
-  
-  echo $result; 
-  
+
+  $pos = strpos($result, "Error 500");
+
+  if ($pos === false){
+   echo $result; }
+   else {
+     echo "Error [bxerr:BASX0005]: Stack Overflow: Try tail recursion?";
+     }
 ?>

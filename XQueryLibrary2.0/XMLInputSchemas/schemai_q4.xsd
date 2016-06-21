@@ -1,0 +1,85 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:simpleType name="lastType">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="Buneman"/>
+    <xs:enumeration value="Jackobson"/>
+     
+  </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="firstType">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="Peter"/>
+     
+     
+  </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="titleType">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="UML"/>
+     
+     
+  </xs:restriction>
+</xs:simpleType>
+<xs:element name="args">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="fst">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="bib">
+  <xs:complexType>
+  <xs:sequence>
+    <xs:element name="book" minOccurs="1" maxOccurs="unbounded">
+    <xs:complexType>    
+  <xs:sequence>
+  <xs:element name="author" type="authorType" minOccurs="1" maxOccurs="unbounded">
+    <xs:complexType>
+  <xs:sequence>    
+    <xs:element name="first" type="firstType" minOccurs="1" maxOccurs="1"/>
+    <xs:element name="last" type="lastType" minOccurs="1" maxOccurs="1"/>
+  </xs:sequence>
+    </xs:complexType>
+</xs:element> 
+</xs:sequence>
+</xs:complexType>
+    </xs:element>
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="snd">
+<xs:complexType>
+<xs:sequence>
+  <xs:element name="bib">
+  <xs:complexType>
+  <xs:sequence>
+  <xs:element name="book" minOccurs="1" maxOccurs="unbounded">
+  <xs:complexType>
+     <xs:sequence>
+     <xs:element name="author" type="authorType" minOccurs="1" maxOccurs="unbounded">
+      <xs:complexType>
+      <xs:sequence>
+      <xs:element name="first" type="firstType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="last" type="lastType" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+      </xs:complexType>
+      </xs:element> 
+       
+      <xs:element name="title" type="titleType"/> 
+          
+    </xs:sequence>
+     
+  </xs:complexType>
+</xs:element>
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>

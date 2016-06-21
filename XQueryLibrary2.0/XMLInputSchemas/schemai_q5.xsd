@@ -1,0 +1,70 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:simpleType name="titleType">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="UML"/>
+    <xs:enumeration value="XML"/>
+  </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="priceType">
+  <xs:restriction base="xs:integer">
+    <xs:enumeration value="200"/>
+     
+  </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="reviewType">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="Good"/>
+     
+  </xs:restriction>
+</xs:simpleType>
+<xs:element name="args">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="fst">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="reviews">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="entry" minOccurs="1" maxOccurs="unbounded">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="title" type="titleType"/>
+      <xs:element name="price" type="priceType"/>
+      <xs:element name="review" type="reviewType"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="snd">
+<xs:complexType>
+<xs:sequence>
+  <xs:element name="bib">
+  <xs:complexType>
+  <xs:sequence>
+  <xs:element name="book" minOccurs="1" maxOccurs="unbounded">
+  <xs:complexType>
+     <xs:sequence>
+      
+      <xs:element name="price" type="priceType"/> 
+      <xs:element name="title" type="titleType"/> 
+          
+    </xs:sequence>
+     
+  </xs:complexType>
+</xs:element>
+  </xs:sequence>
+  </xs:complexType>
+  </xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>
