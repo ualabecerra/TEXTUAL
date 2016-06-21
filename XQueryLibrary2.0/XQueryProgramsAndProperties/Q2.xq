@@ -1,4 +1,4 @@
-import module namespace tc = "test_cases" at "tc3.xq";
+import module namespace tc = "test_cases" at "tc5.xq";
 
 declare function tc:q2($file)
 {
@@ -47,6 +47,5 @@ declare function tc:nio2($file,$results)
 not (every $bi in $file/bib/book satisfies some $bo in $results/result satisfies $bo/title=$bi/author)
 };
 
-tc:tester(doc("/Users/antoniobecerra/Desktop/testing-antonio/schemai_q2.xsd"),
-          "tc:q2","tc:i2","tc:o2","tc:io2",5)
+tc:tester(doc("schemai_q2.xsd"),"tc:q2","tc:i2","tc:o2","tc:io2",5,())
 

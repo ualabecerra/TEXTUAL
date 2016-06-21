@@ -1,4 +1,4 @@
-import module namespace tc = "test_cases" at "tc3.xq";
+import module namespace tc = "test_cases" at "tc5.xq";
 
 declare function tc:q6($file)
 {
@@ -55,5 +55,4 @@ declare function tc:nio6($file,$bib)
 not(every $book in $bib/book satisfies count($book/et-al)=1)
 };
 
-tc:tester(doc("/Users/antoniobecerra/Desktop/testing-antonio/schemai_q6.xsd"),
-"tc:q6","tc:i6","tc:o6","tc:io6",5)
+tc:tester(doc("schemai_q6.xsd"),"tc:q6","tc:i6","tc:o6","tc:io6",5,())

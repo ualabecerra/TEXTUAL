@@ -1,4 +1,4 @@
-import module namespace tc = "test_cases" at "tc3.xq";
+import module namespace tc = "test_cases" at "tc5.xq";
 
 declare function tc:q11($args)
 {
@@ -53,5 +53,4 @@ declare function tc:nio11($args,$results)
 not (  true())
 };
 
-tc:tester(doc("/Users/antoniobecerra/Desktop/testing-antonio/schemai_q11.xsd"),
-"tc:q11","tc:i11","tc:no11","tc:io11",5)
+tc:tester(doc("schemai_q11.xsd"),"tc:q11","tc:i11","tc:no11","tc:io11",5,())

@@ -1,4 +1,4 @@
-import module namespace tc = "test_cases" at "tc3.xq";
+import module namespace tc = "test_cases" at "tc5.xq";
 
 
 declare function tc:q5($args)
@@ -49,5 +49,4 @@ not (every $title in $bib/book-with-prices/title satisfies some $title2 in $file
 };
 
 
-tc:tester(doc("/Users/antoniobecerra/Desktop/testing-antonio/schemai_q5.xsd"),
-"tc:q5","tc:i5","tc:o5","tc:nio5",5)
+tc:tester(doc("schemai_q5.xsd"),"tc:q5","tc:i5","tc:o5","tc:nio5",5,())

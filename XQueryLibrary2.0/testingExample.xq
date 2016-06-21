@@ -1,6 +1,5 @@
 import module namespace tc = "test_cases" at "tc5.xq";
 
-
 declare function tc:q1($file)
 {
 <bib>
@@ -45,4 +44,4 @@ declare function tc:nio1($bibi,$bibo)
 not (every $bi in $bibi/bib/book satisfies some $bo in $bibo/book satisfies $bo/title=$bi/title )
 };
 
-tc:tester(doc("schemai_q1.xsd"),"tc:q1","tc:i1","tc:o1","tc:io1",5,())
+tc:tester(doc("schemai_q1.xsd"),"tc:q1","tc:i1","tc:o1","tc:io1",1,())

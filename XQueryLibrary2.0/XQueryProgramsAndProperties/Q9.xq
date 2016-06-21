@@ -1,4 +1,4 @@
-import module namespace tc = "test_cases" at "tc3.xq";
+import module namespace tc = "test_cases" at "tc5.xq";
 
 declare function tc:q9($file)
 {
@@ -42,5 +42,4 @@ not (every $title in $results satisfies some $f in $file//(chapter | section)/ti
 };
 
 
-tc:tester(doc("/Users/antoniobecerra/Desktop/testing-antonio/schemai_q9.xsd"),
-"tc:q9","tc:i9","tc:o9","tc:nio9",5)
+tc:tester(doc("schemai_q9.xsd"),"tc:q9","tc:i9","tc:o9","tc:nio9",5,())

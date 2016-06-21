@@ -1,4 +1,4 @@
-import module namespace tc = "test_cases" at "tc3.xq";
+import module namespace tc = "test_cases" at "tc5.xq";
  
 declare function tc:q10($file)
 {
@@ -50,7 +50,6 @@ not( $results/minprice/price = min(let $books := $file//book
 };
 
 
-tc:tester(doc("/Users/antoniobecerra/Desktop/testing-antonio/schemai_q10.xsd"),
-"tc:q10","tc:i10","tc:o10","tc:nio10",5)
+tc:tester(doc("schemai_q10.xsd"),"tc:q10","tc:i10","tc:o10","tc:nio10",5,())
 
  

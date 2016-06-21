@@ -1,4 +1,4 @@
-import module namespace tc = "test_cases" at "tc3.xq";
+import module namespace tc = "test_cases" at "tc5.xq";
 
 declare function tc:q7($file)
 {
@@ -25,7 +25,7 @@ declare function tc:o7($bib)
 {
   let $count := count($bib/book)
   return
-  every $i in 1 to $count - 1 satisfies $bib/book[$i]/title<=$bib/book[$i+1]/title
+  every $i in 1 to $count - 1 satisfies $bib/book[$i]/title<=$bib/book[sum($i,1)]/title
 };
 
  
@@ -44,7 +44,7 @@ declare function tc:no7($bib)
 {
 not(  let $count := count($bib/book)
   return
-  every $i in 1 to $count - 1 satisfies $bib/book[$i]/title<=$bib/book[$i+1]/title )
+  every $i in 1 to $count - 1 satisfies $bib/book[$i]/title<=$bib/book[sum($i,1)]/title )
 };
 
  
@@ -54,6 +54,5 @@ declare function tc:nio7($file,$bib)
  not ( true())
 };
 
-tc:tester(doc("/Users/antoniobecerra/Desktop/testing-antonio/schemai_q7.xsd"),
-"tc:q7","tc:i7","tc:no7","tc:io7",5)
+tc:tester(doc("schemai_q7.xsd"),"tc:q7","tc:i7","tc:no7","tc:io7",5,())
  

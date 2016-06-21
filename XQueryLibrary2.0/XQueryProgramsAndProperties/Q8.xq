@@ -1,4 +1,4 @@
-import module namespace tc = "test_cases" at "tc3.xq";
+import module namespace tc = "test_cases" at "tc5.xq";
 
 
 declare function tc:q8($file)
@@ -48,6 +48,5 @@ declare function tc:nio8($file,$books)
   not (true())
 };
 
-tc:tester(doc("/Users/antoniobecerra/Desktop/testing-antonio/schemai_q8.xsd"),
-"tc:q8","tc:i8","tc:o8","tc:nio8",5)
+tc:tester(doc("schemai_q8.xsd"),"tc:q8","tc:i8","tc:o8","tc:nio8",5,())
  

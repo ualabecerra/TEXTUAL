@@ -1,4 +1,4 @@
-import module namespace tc = "test_cases" at "tc3.xq";
+import module namespace tc = "test_cases" at "tc5.xq";
 
 declare function tc:q4($args)
 {
@@ -56,5 +56,4 @@ not(  every $item in $results/result/title satisfies some $title in $args/args/s
 };
 
 
-tc:tester(doc("/Users/antoniobecerra/Desktop/testing-antonio/schemai_q4.xsd"),
-"tc:q4","tc:i4","tc:no4","tc:io4",5)
+tc:tester(doc("schemai_q4.xsd"),"tc:q4","tc:i4","tc:no4","tc:io4”,5,())

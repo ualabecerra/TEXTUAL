@@ -1,4 +1,4 @@
-import module namespace tc = "test_cases" at "tc3.xq";
+import module namespace tc = "test_cases" at "tc5.xq";
 
 declare function tc:q3($file)
 {
@@ -44,5 +44,4 @@ declare function tc:nio3($file,$results)
  not( true())
 };
 
-tc:tester(doc("/Users/antoniobecerra/Desktop/testing-antonio/schemai_q3.xsd"),
-"tc:q3","tc:i3","tc:o3","tc:nio3",5)
+tc:tester(doc("schemai_q3.xsd"),"tc:q3","tc:i3","tc:o3","tc:nio3",5,())
